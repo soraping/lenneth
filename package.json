@@ -1,11 +1,23 @@
 {
   "name": "lenneth",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "lenneth",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "keywords": [
+    "node"
+  ],
+  "author": {
+    "name": "caoshiping",
+    "email": "soraping@163.com",
+    "url": "https://github.com/soraping"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/soraping/lenneth"
+  },
+  "homepage": "https://github.com/soraping",
+  "license": "MIT"
 }
