@@ -9,6 +9,23 @@
   "keywords": [
     "node"
   ],
+  "dependencies": {
+    "cli-color": "^1.2.0",
+    "cli-table2": "^0.2.0",
+    "koa": "^2.2.0",
+    "koa-router": "^7.2.0",
+    "reflect-metadata": "^0.1.10"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.0.39",
+    "@types/koa-router": "^7.0.22",
+    "chai": "^4.0.2",
+    "mocha": "^3.4.2",
+    "sinon": "^2.3.2",
+    "sinon-chai": "^2.10.0",
+    "supertest": "^3.0.0",
+    "typescript": "^2.3.4"
+  },
   "author": {
     "name": "caoshiping",
     "email": "soraping@163.com",
