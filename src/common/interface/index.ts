@@ -1,5 +1,3 @@
-import { IlennethApplication } from './lenneth-application.interface'
-
-export {
-    IlennethApplication
-}
+export * from './lenneth-application.interface'
+export * from './modules/module-metatype.interface'
+export * from './request-mapping-metadata.interface'
