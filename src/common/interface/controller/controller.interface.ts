@@ -1,1 +1,1 @@
-export interface ControllerMetadata {}
+export interface IController {}

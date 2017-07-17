@@ -1,8 +1,8 @@
-import { Controller } from '../controller'
+import { IController } from '../controller'
 
 export interface ModuleMetadata {
     modules?: any[],
-    controllers?: Controller[] | any[],
+    controllers?: IController[] | any[],
     exports?: any[],
     components?: any[]
 }

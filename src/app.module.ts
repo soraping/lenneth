@@ -1,8 +1,8 @@
 import { Module } from './common'
-import { TestController } from './test.controller'
+import { TestModule } from './test.module'
 
 @Module({
-    controllers: [ TestController ]
+    modules: [ TestModule ]
 })
 export class ApplicationModule{
 

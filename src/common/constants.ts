@@ -1,3 +1,6 @@
+/**
+ * 常量
+ */
 export const metadata = {
     MODULES: 'modules',
     COMPONENTS: 'components',

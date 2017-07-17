@@ -1,6 +1,7 @@
 import 'reflect-metadata'
 
 import { metadata } from '../constants'
+import { ModuleMetadata } from '../interface/modules/module-metadata.interface'
 
 const metadateKeys = [
     metadata.MODULES,
@@ -22,7 +23,7 @@ const validateKeys = (keys: string[]) => {
     keys.forEach(validateKey);
 }
 
-export const Module = (props): ClassDecorator => {
+export const Module = (props: ModuleMetadata): ClassDecorator => {
     const propsKeys = Object.keys(props)
     validateKeys(propsKeys)
     return (target: object) => {

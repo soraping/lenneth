@@ -1,3 +1,6 @@
 export * from './lenneth-application.interface'
-export * from './modules/module-metatype.interface'
 export * from './request-mapping-metadata.interface'
+export * from './metatype.interface'
+export * from './injectable.interface'
+export * from './controller'
+export * from './modules'
