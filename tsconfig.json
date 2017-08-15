@@ -12,11 +12,8 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "allowJs": true,
-    "rootDir": "./src",
+    "rootDir": "./example",
     "outDir": "./lib"
   },
-  "exclude": [
-    "node_modules",
-    "lib"
-  ]
+  "exclude": ["node_modules", "lib"]
 }

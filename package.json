@@ -12,8 +12,8 @@
   "dependencies": {
     "cli-color": "^1.2.0",
     "cli-table2": "^0.2.0",
-    "koa": "^2.2.0",
-    "koa-router": "^7.2.0",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
     "reflect-metadata": "^0.1.10"
   },
   "devDependencies": {
@@ -24,7 +24,7 @@
     "sinon": "^2.3.2",
     "sinon-chai": "^2.10.0",
     "supertest": "^3.0.0",
-    "typescript": "^2.3.4"
+    "typescript": "^2.4.2"
   },
   "author": {
     "name": "caoshiping",

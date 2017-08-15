@@ -43,8 +43,8 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.3.tgz#fca61c26f83e5f453166114f57d53a47feb36d45"
+  version "8.0.22"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.22.tgz#9c6bfee1f45f5e9952ff6b487e657ecca48c7777"
 
 accepts@^1.2.2:
   version "1.3.3"
@@ -85,8 +85,8 @@ browser-stdout@1.3.0:
   resolved "https://registry.yarnpkg.com/browser-stdout/-/browser-stdout-1.3.0.tgz#f351d32969d32fa5d7a5567154263d928ae3bd1f"
 
 chai@^4.0.2:
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/chai/-/chai-4.0.2.tgz#2f7327c4de6f385dd7787999e2ab02697a32b83b"
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/chai/-/chai-4.1.1.tgz#66e21279e6f3c6415ff8231878227900e2171b39"
   dependencies:
     assertion-error "^1.0.1"
     check-error "^1.0.1"
@@ -180,17 +180,11 @@ d@1:
   dependencies:
     es5-ext "^0.10.9"
 
-debug@*, debug@^2.2.0:
+debug@*, debug@2.6.8, debug@^2.2.0:
   version "2.6.8"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.8.tgz#e731531ca2ede27d188222427da17821d68ff4fc"
   dependencies:
     ms "2.0.0"
-
-debug@2.6.0:
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.0.tgz#bc596bcabe7617f11d9fa15361eded5608b8499b"
-  dependencies:
-    ms "0.7.2"
 
 deep-eql@^2.0.1:
   version "2.0.2"
@@ -210,9 +204,9 @@ delegates@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/delegates/-/delegates-1.0.0.tgz#84c6e159b81904fdca59a0ef44cd870d31250f9a"
 
-depd@1.1.0, depd@^1.1.0, depd@~1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3"
+depd@1.1.1, depd@^1.1.0, depd@~1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/depd/-/depd-1.1.1.tgz#5783b4e1c459f06fa5ca27f991f3d06e7a310359"
 
 destroy@^1.0.3:
   version "1.0.4"
@@ -231,8 +225,8 @@ error-inject@~1.0.0:
   resolved "https://registry.yarnpkg.com/error-inject/-/error-inject-1.0.0.tgz#e2b3d91b54aed672f309d950d154850fa11d4f37"
 
 es5-ext@^0.10.12, es5-ext@^0.10.13, es5-ext@^0.10.14, es5-ext@^0.10.9, es5-ext@~0.10.14, es5-ext@~0.10.2:
-  version "0.10.23"
-  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.23.tgz#7578b51be974207a5487821b56538c224e4e7b38"
+  version "0.10.27"
+  resolved "https://registry.yarnpkg.com/es5-ext/-/es5-ext-0.10.27.tgz#bf926b058c62b1cb5de1a887930673b6aa6d9a66"
   dependencies:
     es6-iterator "2"
     es6-symbol "~3.1"
@@ -341,10 +335,10 @@ http-assert@^1.1.0:
     http-errors "~1.6.1"
 
 http-errors@^1.2.8, http-errors@^1.3.1, http-errors@~1.6.1:
-  version "1.6.1"
-  resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.1.tgz#5f8b8ed98aca545656bf572997387f904a722257"
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/http-errors/-/http-errors-1.6.2.tgz#0a002cc85707192a7e7946ceedc11155f60ec736"
   dependencies:
-    depd "1.1.0"
+    depd "1.1.1"
     inherits "2.0.3"
     setprototypeof "1.0.3"
     statuses ">= 1.3.1 < 2"
@@ -396,6 +390,10 @@ koa-compose@^3.0.0:
   dependencies:
     any-promise "^1.1.0"
 
+koa-compose@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/koa-compose/-/koa-compose-4.0.0.tgz#2800a513d9c361ef0d63852b038e4f6f2d5a773c"
+
 koa-convert@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/koa-convert/-/koa-convert-1.2.0.tgz#da40875df49de0539098d1700b50820cebcd21d0"
@@ -407,9 +405,9 @@ koa-is-json@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/koa-is-json/-/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
 
-koa-router@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-7.2.0.tgz#cb35ba94fee2614d39736b7fa5381681b7aaf78c"
+koa-router@^7.2.1:
+  version "7.2.1"
+  resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-7.2.1.tgz#b40a4ab3c6adb4b40895debd00a9c640304e3039"
   dependencies:
     debug "^2.2.0"
     http-errors "^1.3.1"
@@ -417,9 +415,9 @@ koa-router@^7.2.0:
     methods "^1.0.1"
     path-to-regexp "^1.1.1"
 
-koa@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.2.0.tgz#b055933187849d540ad8b9f731baaa4be97c652d"
+koa@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/koa/-/koa-2.3.0.tgz#9e1e8e4da401839c57b8527eadc57f76127555a7"
   dependencies:
     accepts "^1.2.2"
     content-disposition "~0.5.0"
@@ -435,7 +433,7 @@ koa@^2.2.0:
     http-assert "^1.1.0"
     http-errors "^1.2.8"
     is-generator-function "^1.0.3"
-    koa-compose "^3.0.0"
+    koa-compose "^4.0.0"
     koa-convert "^1.2.0"
     koa-is-json "^1.0.0"
     mime-types "^2.0.7"
@@ -528,15 +526,15 @@ methods@^1.0.1, methods@^1.1.1, methods@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/methods/-/methods-1.1.2.tgz#5529a4d67654134edcc5266656835b0f851afcee"
 
-mime-db@~1.27.0:
-  version "1.27.0"
-  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.27.0.tgz#820f572296bbd20ec25ed55e5b5de869e5436eb1"
+mime-db@~1.29.0:
+  version "1.29.0"
+  resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.29.0.tgz#48d26d235589651704ac5916ca06001914266878"
 
 mime-types@^2.0.7, mime-types@^2.1.12, mime-types@~2.1.11, mime-types@~2.1.15:
-  version "2.1.15"
-  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.15.tgz#a4ebf5064094569237b8cf70046776d09fc92aed"
+  version "2.1.16"
+  resolved "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.16.tgz#2b858a52e5ecd516db897ac2be87487830698e23"
   dependencies:
-    mime-db "~1.27.0"
+    mime-db "~1.29.0"
 
 mime@^1.3.4:
   version "1.3.6"
@@ -559,12 +557,12 @@ mkdirp@0.5.1:
     minimist "0.0.8"
 
 mocha@^3.4.2:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.4.2.tgz#d0ef4d332126dbf18d0d640c9b382dd48be97594"
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/mocha/-/mocha-3.5.0.tgz#1328567d2717f997030f8006234bce9b8cd72465"
   dependencies:
     browser-stdout "1.3.0"
     commander "2.9.0"
-    debug "2.6.0"
+    debug "2.6.8"
     diff "3.2.0"
     escape-string-regexp "1.0.5"
     glob "7.1.1"
@@ -573,10 +571,6 @@ mocha@^3.4.2:
     lodash.create "3.1.1"
     mkdirp "0.5.1"
     supports-color "3.1.2"
-
-ms@0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765"
 
 ms@2.0.0:
   version "2.0.0"
@@ -637,26 +631,26 @@ process-nextick-args@~1.0.6:
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-1.0.7.tgz#150e20b756590ad3f91093f25a4f2ad8bff30ba3"
 
 qs@^6.1.0:
-  version "6.4.0"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
+  version "6.5.0"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.0.tgz#8d04954d364def3efc55b5a0793e1e2c8b1e6e49"
 
 readable-stream@^2.0.5:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.2.tgz#5a04df05e4f57fe3f0dc68fdd11dc5c97c7e6f4d"
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
   dependencies:
     core-util-is "~1.0.0"
     inherits "~2.0.3"
     isarray "~1.0.0"
     process-nextick-args "~1.0.6"
-    safe-buffer "~5.1.0"
-    string_decoder "~1.0.0"
+    safe-buffer "~5.1.1"
+    string_decoder "~1.0.3"
     util-deprecate "~1.0.1"
 
 reflect-metadata@^0.1.10:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
 
-safe-buffer@~5.1.0:
+safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.1.tgz#893312af69b2123def71f57889001671eeb2c853"
 
@@ -669,12 +663,12 @@ setprototypeof@1.0.3:
   resolved "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.0.3.tgz#66567e37043eeb4f04d91bd658c0cbefb55b8e04"
 
 sinon-chai@^2.10.0:
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/sinon-chai/-/sinon-chai-2.11.0.tgz#93d90f989fff67ce45767077ffe575dde1faea6d"
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/sinon-chai/-/sinon-chai-2.13.0.tgz#b9a42e801c20234bfc2f43b29e6f4f61b60990c4"
 
 sinon@^2.3.2:
-  version "2.3.5"
-  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.3.5.tgz#9a2fc0ff8d526da716f30953aa2c65d518917f6c"
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/sinon/-/sinon-2.4.1.tgz#021fd64b54cb77d9d2fb0d43cdedfae7629c3a36"
   dependencies:
     diff "^3.1.0"
     formatio "1.2.0"
@@ -697,7 +691,7 @@ string-width@^1.0.1:
     is-fullwidth-code-point "^1.0.0"
     strip-ansi "^3.0.0"
 
-string_decoder@~1.0.0:
+string_decoder@~1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-1.0.3.tgz#0fc67d7c141825de94282dd536bec6b9bce860ab"
   dependencies:
@@ -763,9 +757,9 @@ type-is@^1.5.5:
     media-typer "0.3.0"
     mime-types "~2.1.15"
 
-typescript@^2.3.4:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.0.tgz#aef5a8d404beba36ad339abf079ddddfffba86dd"
+typescript@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.4.2.tgz#f8395f85d459276067c988aa41837a8f82870844"
 
 util-deprecate@~1.0.1:
   version "1.0.2"
