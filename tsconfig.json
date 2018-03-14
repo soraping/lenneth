@@ -1,0 +1,18 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "ES6",
+    "noImplicitAny": false,
+    "sourceMap": true,
+    "preserveConstEnums": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": true,
+    "rootDir": "./src",
+    "outDir": "./lib"
+  },
+  "exclude": ["node_modules", "lib"],
+  "include": ["./typings"],
+  "files": ["./src/index.ts"]
+}
