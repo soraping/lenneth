@@ -1,0 +1,22 @@
+/**
+ *
+ * @param target
+ */
+export const getClass = (target: any): any => {
+  return target.prototype ? target : target.constructor;
+};
+
+/**
+ *
+ * @param target
+ * @param propertyKey
+ */
+export const descriptorOf = (
+  target: any,
+  propertyKey: string
+): PropertyDescriptor => {
+  return Object.getOwnPropertyDescriptor(
+    (target && target.prototype) || target,
+    propertyKey
+  );
+};
