@@ -1,5 +1,5 @@
 /**
- *
+ *  获取类名
  * @param target
  */
 export const getClass = (target: any): any => {
