@@ -1,6 +1,6 @@
 import { IBaseInterface } from "./IBase.interface";
 interface IImport {
-  [path: string]: any[];
+  [path: string]: Function[];
 }
 export interface IServerSettings extends IBaseInterface {
   port?: number | string;
