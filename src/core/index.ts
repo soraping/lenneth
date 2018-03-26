@@ -1,3 +1,3 @@
 export * from "./decorators";
 export * from "./interfaces";
-export * from "./lenneth-application";
+export * from "./lenneth";

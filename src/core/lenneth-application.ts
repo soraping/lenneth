@@ -1,6 +1,6 @@
 import * as Koa from "koa";
 import { ILennthApplication } from "./interfaces";
-export abstract class LennethApplication implements ILennthApplication {
+export class LennethApplication implements ILennthApplication {
   private app: Koa;
   private port?: number | string;
   constructor() {
@@ -20,7 +20,7 @@ export abstract class LennethApplication implements ILennthApplication {
    * @param port 端口号
    * @param args hostname | callback
    */
-  public listen(port: number | string, ...args): void {
+  protected listen(port: number | string, ...args): void {
     this.app.listen(port, ...args);
   }
 }
