@@ -22,8 +22,4 @@ export class Metadata {
   static getOwn(key: string, target: any, propertyKey?: string | symbol): any {
     return Reflect.getOwnMetadata(key, getClass(target), propertyKey);
   }
-
-  static getType(key: string, target: any, propertyKey?: string | symbol): any {
-    return Reflect.getMetadata(DESIGN_TYPE, target, propertyKey);
-  }
 }

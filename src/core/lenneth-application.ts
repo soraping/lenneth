@@ -3,8 +3,10 @@ import { ILennthApplication } from "./interfaces";
 export class LennethApplication implements ILennthApplication {
   private app: Koa;
   private port?: number | string;
+  protected map = new Map<string, any>();
   constructor() {
     this.app = new Koa();
+    this.port = 8080;
   }
   /**
    *
@@ -20,7 +22,7 @@ export class LennethApplication implements ILennthApplication {
    * @param port 端口号
    * @param args hostname | callback
    */
-  protected listen(port: number | string, ...args): void {
-    this.app.listen(port, ...args);
+  public listen(port?: number | string, ...args): void {
+    this.app.listen(port || this.port, ...args);
   }
 }

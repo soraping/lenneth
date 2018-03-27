@@ -1,4 +1,4 @@
-import { Lenneth, ServerSettings } from "../src/index";
+import { LennethApplication, ServerSettings } from "../src/index";
 import { UserController } from "./user.controller";
 
 @ServerSettings({
@@ -7,9 +7,6 @@ import { UserController } from "./user.controller";
   },
   port: "8082"
 })
-class LennethApp extends Lenneth {}
+class LennethApp extends LennethApplication {}
 
-new LennethApp()
-  .start()
-  .then(() => {})
-  .catch(() => {});
+new LennethApp().listen();
