@@ -1,9 +1,12 @@
 import { IBaseInterface } from "./IBase.interface";
-interface IImport {
-  [path: string]: Function[];
-}
+
+export type TImports = { [path: string]: Function[] | Function };
+
 export interface IServerSettings extends IBaseInterface {
-  port?: number | string;
-  imports: IImport;
+  rootDir?: string;
+  port?: string | number;
+  imports: TImports;
+  env?: string;
+  debug?: boolean;
   [key: string]: any;
 }

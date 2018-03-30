@@ -1,5 +1,6 @@
-import { Lenneth, ServerSettings } from "../src/index";
+import { LennethApplication, ServerSettings } from "../src/index";
 import { UserController } from "./user.controller";
+import * as logger from "koa-logger";
 
 @ServerSettings({
   imports: {
@@ -7,4 +8,4 @@ import { UserController } from "./user.controller";
   },
   port: "8082"
 })
-export class LennethApp extends Lenneth {}
+export class LennethApp extends LennethApplication {}

@@ -12,6 +12,10 @@
     "rootDir": "./",
     "outDir": "./lib"
   },
+  "paths": {
+    "constants": "./src/constants",
+    "common": "./src/common"
+  },
   "exclude": ["node_modules", "lib"],
   "include": ["./typings"],
   "files": ["./index.ts"]

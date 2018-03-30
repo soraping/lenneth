@@ -1,6 +1,11 @@
 import * as Koa from "koa";
 import { ILennthApplication } from "./interfaces";
-export class LennethApplication implements ILennthApplication {
+import { LennethSetting } from "./lenneth-setting";
+
+/**
+ *  服务抽象类，定义实现方法和钩子函数
+ */
+export abstract class LennethApplication implements ILennthApplication {
   private app: Koa;
   private port?: number | string;
   protected map = new Map<string, any>();
@@ -18,11 +23,16 @@ export class LennethApplication implements ILennthApplication {
   }
 
   /**
-   * 启动监听
-   * @param port 端口号
-   * @param args hostname | callback
+   * 调用hook
+   * @param key
+   * @param elseFn
+   * @param args
    */
-  public listen(port?: number | string, ...args): void {
-    this.app.listen(port || this.port, ...args);
+  private callHook(key: string, elseFn = new Function(), ...args: any[]) {
+    const self = this;
+    if (key in self) {
+      return self[key](...args);
+    }
+    return elseFn();
   }
 }
