@@ -14,7 +14,8 @@
   },
   "paths": {
     "constants": "./src/constants",
-    "common": "./src/common"
+    "common": "./src/common",
+    "lenneth": "../src"
   },
   "exclude": ["node_modules", "lib"],
   "include": ["./typings"],
