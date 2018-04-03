@@ -1,9 +1,10 @@
 import { IBaseInterface } from "./IBase.interface";
 export interface ILenneth extends IBaseInterface {
-  start(): Promise<any>;
   // hook
+  // 拦截器
+  $Interceptor?: Function;
   // 初始化
-  $onInit?(): void | Promise<any>;
+  $onInit?: Function;
   // 加载中间件
   $onMountingMiddlewares?: Function;
   // 路由编译后
@@ -11,5 +12,5 @@ export interface ILenneth extends IBaseInterface {
   // start后
   $onReady?: Function;
   // server error
-  $onServerInitError?(error: any): any;
+  $onServerInitError?: Function;
 }

@@ -9,7 +9,7 @@ export abstract class LennethApplication implements ILennthApplication {
   private app: Koa;
   private port?: number | string;
   protected map = new Map<string, any>();
-  constructor() {
+  constructor(private lennethSetting: LennethSetting) {
     this.app = new Koa();
     this.port = 8080;
   }
@@ -34,5 +34,14 @@ export abstract class LennethApplication implements ILennthApplication {
       return self[key](...args);
     }
     return elseFn();
+  }
+
+  /**
+   * start
+   */
+  public start() {
+    return new Promise((resolve, reject) => {
+      this.app.listen;
+    });
   }
 }
