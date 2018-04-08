@@ -8,10 +8,15 @@ import { LennethSetting } from "./lenneth-setting";
 export abstract class LennethApplication implements ILennthApplication {
   private app: Koa;
   private port?: number | string;
+  private hostname?: string;
   protected map = new Map<string, any>();
-  constructor(private lennethSetting: LennethSetting) {
+  // 读取配置
+  private _lennethSetting: LennethSetting;
+  constructor() {
     this.app = new Koa();
     this.port = 8080;
+    this.hostname = "0.0.0.0";
+    this._lennethSetting = LennethSetting.getMetadata(this);
   }
   /**
    *
@@ -23,7 +28,7 @@ export abstract class LennethApplication implements ILennthApplication {
   }
 
   /**
-   * 调用hook
+   * 统一调用hook方法
    * @param key
    * @param elseFn
    * @param args
@@ -37,11 +42,54 @@ export abstract class LennethApplication implements ILennthApplication {
   }
 
   /**
+   * 加载拦截器
+   * 拦截器要在其他中间件前加载
+   * 1. hook函数中添加拦截器
+   * 2. 修饰器 @Interceptor
+   * 两者都有时给出警告提示，并只执行@Interceptor修饰器的方法
+   */
+  private async loadInterceptor() {
+    const self = this;
+    if ("$interceptor" in self) {
+      this.use(self["$interceptor"]());
+    }
+  }
+
+  private async loadRouters(): Promise<any> {}
+
+  /**
+   * 启动服务
+   */
+  private async startServer(): Promise<any> {
+    let { hostname, port } = new LennethSetting().getHttpPort();
+    console.log(`start server on ${port}`);
+    return new Promise((res, err) => {
+      this.app.listen(<number>(port || this.port), hostname || this.hostname);
+      res();
+    });
+  }
+
+  /**
    * start
    */
-  public start() {
-    return new Promise((resolve, reject) => {
-      this.app.listen;
-    });
+  public async start(): Promise<any> {
+    const startTime = new Date();
+    try {
+      // 初始化(DB)
+      await this.callHook("$onInit");
+      // 拦截器
+      await this.loadInterceptor();
+      // 载入中间件
+      await this.callHook("$onMountingMiddlewares", undefined, this.app);
+      // 载入路由
+      // await this.loadRouters();
+      // 启动服务
+      await this.startServer();
+      // 启动服务完成
+      await this.callHook("$onReady");
+    } catch (error) {
+      this.callHook("$onServerInitError", undefined, error);
+      return Promise.reject(error);
+    }
   }
 }

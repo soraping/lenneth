@@ -3,7 +3,8 @@
  */
 import { IServerSettings, TImports } from "./interfaces";
 import { DebugController } from "./debug.controller";
-import { Env } from "./common";
+import { Env, Metadata } from "./common";
+import { SERVER_SETTINGS } from "../constants";
 
 // 根目录
 const rootDir = process.cwd();
@@ -33,8 +34,8 @@ export class LennethSetting implements IServerSettings {
   }
 
   set imports(values: TImports) {
-    let newImports = Object.assign(this.imports, values);
-    this.map.set("imports", newImports);
+    //let newImports = Object.assign(this.imports, values);
+    this.map.set("imports", values);
   }
 
   get imports(): TImports {
@@ -65,29 +66,33 @@ export class LennethSetting implements IServerSettings {
     this.map.set("debug", value);
   }
 
+  static getMetadata(target: any) {
+    return Metadata.getOwn(SERVER_SETTINGS, target);
+  }
+
   /**
    * 获取setting参数
    */
-  $get(): LennethSetting {
-    this.forEach((value, key) => {
-      this.map.set(key, value);
-    });
-    return this;
-  }
+  // $get(): LennethSetting {
+  //   this.forEach((value, key) => {
+  //     this.map.set(key, value);
+  //   });
+  //   return this;
+  // }
 
-  forEach(
-    callbackfn: (value: any, index: string, map: Map<string, any>) => void,
-    thisArg?: any
-  ) {
-    return this.map.forEach(callbackfn, thisArg);
-  }
+  // private forEach(
+  //   callbackfn: (value: any, index: string, map: Map<string, any>) => void,
+  //   thisArg?: any
+  // ) {
+  //   return this.map.forEach(callbackfn, thisArg);
+  // }
 
   /**
    * 构建端口
    * listion(port, '0.0.0.0', callback)
    */
-  getHttpPort(): { address: string; port: string | number } {
-    let address = "0.0.0.0";
-    return { address, port: this.map.get("port") };
+  getHttpPort(): { hostname: string; port: string | number } {
+    let hostname = "0.0.0.0";
+    return { hostname, port: this.map.get("port") };
   }
 }

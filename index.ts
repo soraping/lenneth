@@ -1,6 +1,6 @@
-import { LennethApp } from "./examples";
+import { Lenneth } from "./examples";
 
-new LennethApp()
+new Lenneth()
   .start()
-  .then(() => console.log("app start 8082"))
-  .catch(() => console.log("app start failed"));
+  .then()
+  .catch(e => console.error("app start failed"));
