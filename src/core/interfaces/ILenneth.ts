@@ -21,4 +21,6 @@ export interface ILenneth extends IBaseInterface {
   $interceptor?(): IInterceptor;
   // server error
   $onServerInitError?(error: any): any;
+  // 自添加参数方法
+  [key: string]: any;
 }

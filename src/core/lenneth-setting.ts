@@ -34,8 +34,9 @@ export class LennethSetting implements IServerSettings {
   }
 
   set imports(values: TImports) {
-    //let newImports = Object.assign(this.imports, values);
-    this.map.set("imports", values);
+    let imports = this.imports;
+    let newImports = { ...imports, ...values };
+    this.map.set("imports", newImports);
   }
 
   get imports(): TImports {
@@ -71,21 +72,29 @@ export class LennethSetting implements IServerSettings {
   }
 
   /**
-   * 获取setting参数
+   * 设置字段
+   * @param propertyKey
+   * @param value
    */
-  // $get(): LennethSetting {
-  //   this.forEach((value, key) => {
-  //     this.map.set(key, value);
-  //   });
-  //   return this;
-  // }
-
-  // private forEach(
-  //   callbackfn: (value: any, index: string, map: Map<string, any>) => void,
-  //   thisArg?: any
-  // ) {
-  //   return this.map.forEach(callbackfn, thisArg);
-  // }
+  set(propertyKey: string | IServerSettings, value?: any): LennethSetting {
+    if (typeof propertyKey == "string") {
+      this.map.set(propertyKey, value);
+    } else {
+      const self: LennethSetting = this;
+      Object.keys(propertyKey).forEach(key => {
+        const descriptor = Object.getOwnPropertyDescriptor(
+          LennethSetting.prototype,
+          key
+        );
+        if (descriptor && ["set", "map"].indexOf(key) === -1) {
+          self[key] = propertyKey[key];
+        } else {
+          this.set(key, propertyKey[key]);
+        }
+      });
+    }
+    return this;
+  }
 
   /**
    * 构建端口

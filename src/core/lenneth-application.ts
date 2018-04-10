@@ -10,21 +10,25 @@ export abstract class LennethApplication implements ILennthApplication {
   private port?: number | string;
   private hostname?: string;
   protected map = new Map<string, any>();
-  // 读取配置
-  private _lennethSetting: LennethSetting;
+  // 配置类实例
+  private lennethSetting: LennethSetting;
+
   constructor() {
     this.app = new Koa();
-    this.port = 8080;
-    this.hostname = "0.0.0.0";
-    this._lennethSetting = LennethSetting.getMetadata(this);
+    this.lennethSetting = new LennethSetting();
+    // 获取设置的service参数
+    const _settingParams = LennethSetting.getMetadata(this);
+    if (_settingParams) {
+      this.setSettings(_settingParams);
+    }
   }
+
   /**
-   *
-   * @param middleware koa中间件
+   * 设置参数
+   * @param settings
    */
-  public use(middleware: Koa.Middleware): this {
-    this.app.use(middleware);
-    return this;
+  private setSettings(settings: LennethSetting) {
+    this.lennethSetting.set(settings);
   }
 
   /**
@@ -61,12 +65,20 @@ export abstract class LennethApplication implements ILennthApplication {
    * 启动服务
    */
   private async startServer(): Promise<any> {
-    let { hostname, port } = new LennethSetting().getHttpPort();
-    console.log(`start server on ${port}`);
+    let { hostname, port } = this.lennethSetting.getHttpPort();
     return new Promise((res, err) => {
-      this.app.listen(<number>(port || this.port), hostname || this.hostname);
+      this.app.listen(<number>port, hostname);
       res();
     });
+  }
+
+  /**
+   *
+   * @param middleware koa中间件
+   */
+  public use(middleware: Koa.Middleware): this {
+    this.app.use(middleware);
+    return this;
   }
 
   /**
