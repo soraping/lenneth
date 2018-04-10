@@ -3,7 +3,7 @@ import {
   ServerSettings,
   ILenneth,
   IInterceptor
-} from "../src";
+} from "lenneth";
 import { UserController } from "./user.controller";
 import * as logger from "koa-logger";
 

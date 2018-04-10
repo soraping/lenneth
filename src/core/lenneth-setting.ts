@@ -1,10 +1,10 @@
 /**
  * 基础设置类
  */
-import { IServerSettings, TImports } from "./interfaces";
+import { IServerSettings, TImports } from "@interfaces";
+import { Env, Metadata } from "@common";
+import { SERVER_SETTINGS } from "@constants";
 import { DebugController } from "./debug.controller";
-import { Env, Metadata } from "./common";
-import { SERVER_SETTINGS } from "../constants";
 
 // 根目录
 const rootDir = process.cwd();

@@ -2,8 +2,8 @@
  * reflect 方法封装
  */
 import "reflect-metadata";
-import { getClass } from "../utils";
-import { DESIGN_TYPE } from "../../constants";
+import { getClass } from "@utils";
+import { DESIGN_TYPE } from "@constants";
 
 export class Metadata {
   static get(key: string, target: any, propertyKey?: string | symbol): any {

@@ -1,5 +1,5 @@
 import * as Koa from "koa";
-import { ILennthApplication } from "./interfaces";
+import { ILennthApplication } from "@interfaces";
 import { LennethSetting } from "./lenneth-setting";
 
 /**
@@ -59,6 +59,9 @@ export abstract class LennethApplication implements ILennthApplication {
     }
   }
 
+  /**
+   * 设置controller路由
+   */
   private async loadRouters(): Promise<any> {}
 
   /**

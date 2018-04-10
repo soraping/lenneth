@@ -10,12 +10,16 @@
     "experimentalDecorators": true,
     "removeComments": true,
     "rootDir": "./",
-    "outDir": "./lib"
-  },
-  "paths": {
-    "constants": "./src/constants",
-    "common": "./src/common",
-    "lenneth": "../src"
+    "outDir": "./lib",
+    "baseUrl": ".",
+    "paths": {
+      "@constants": ["src/constants"],
+      "@common": ["src/common"],
+      "@utils": ["src/utils"],
+      "@interfaces": ["src/interfaces"],
+      "@decorators": ["src/decorators"],
+      "lenneth": ["src"]
+    }
   },
   "exclude": ["node_modules", "lib"],
   "include": ["./typings"],
