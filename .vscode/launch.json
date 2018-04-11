@@ -8,9 +8,9 @@
       "type": "node",
       "request": "launch",
       "name": "lenneth",
-      "program": "${workspaceRoot}/lib/index.js",
+      "program": "${workspaceRoot}/build/index.js",
       "cwd": "${workspaceRoot}",
-      "outFiles": ["${workspaceRoot}/lib/**/*.js"],
+      "outFiles": ["${workspaceRoot}/build/**/*.js"],
       "runtimeExecutable": "/Users/soraping/.nvm/versions/node/v8.9.4/bin/node",
       "env": { "NODE_ENV": "development" },
       "sourceMaps": true

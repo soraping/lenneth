@@ -6,7 +6,7 @@ import { getClass } from "@utils";
 import { DESIGN_TYPE } from "@constants";
 
 export class Metadata {
-  static get(key: string, target: any, propertyKey?: string | symbol): any {
+  static get(key: string, target: any, propertyKey: string | symbol): any {
     return Reflect.getMetadata(key, getClass(target), propertyKey);
   }
 
@@ -16,10 +16,14 @@ export class Metadata {
     target: any,
     propertyKey?: string | symbol
   ): any {
-    return Reflect.defineMetadata(key, value, getClass(target), propertyKey);
+    return propertyKey
+      ? Reflect.defineMetadata(key, value, getClass(target), propertyKey)
+      : Reflect.defineMetadata(key, value, getClass(target));
   }
 
   static getOwn(key: string, target: any, propertyKey?: string | symbol): any {
-    return Reflect.getOwnMetadata(key, getClass(target), propertyKey);
+    return propertyKey
+      ? Reflect.getOwnMetadata(key, getClass(target), propertyKey)
+      : Reflect.getOwnMetadata(key, getClass(target));
   }
 }

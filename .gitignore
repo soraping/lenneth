@@ -3,4 +3,6 @@
 .DS_Store
 yarn.lock
 node_modules
-lib
+dist
+temp
+build

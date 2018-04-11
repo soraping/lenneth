@@ -2,26 +2,32 @@
   "compileOnSave": false,
   "compilerOptions": {
     "module": "commonjs",
-    "target": "ES6",
+    "target": "ES2017",
+    "moduleResolution": "node",
     "noImplicitAny": false,
     "sourceMap": true,
     "preserveConstEnums": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "removeComments": true,
+    "importHelpers": true,
+    "strict": true,
+    "watch": false,
     "rootDir": "./",
-    "outDir": "./lib",
-    "baseUrl": "./src",
+    "outDir": "./build",
+    "baseUrl": ".",
     "paths": {
-      "@constants": ["constants"],
-      "@common": ["common"],
-      "@utils": ["utils"],
-      "@interfaces": ["interfaces"],
-      "@decorators": ["decorators"],
-      "lenneth": ["."]
-    }
+      "@core": ["src/core"],
+      "@interfaces": ["src/interfaces"],
+      "@decorators": ["src/decorators"],
+      "@constants": ["src/constants"],
+      "@common": ["src/common"],
+      "@utils": ["src/utils"],
+      "@lenneth": ["./src"]
+    },
+    "lib": ["es6", "dom"]
   },
-  "exclude": ["node_modules", "lib"],
-  "include": ["./typings"],
+  "exclude": ["node_modules", "build"],
+  "include": ["./typings", "./src/**/*.ts", "index.ts", "./examples/**/*.ts"],
   "files": ["./index.ts"]
 }

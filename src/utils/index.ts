@@ -14,7 +14,7 @@ export const getClass = (target: any): any => {
 export const descriptorOf = (
   target: any,
   propertyKey: string
-): PropertyDescriptor => {
+): PropertyDescriptor | undefined => {
   return Object.getOwnPropertyDescriptor(
     (target && target.prototype) || target,
     propertyKey

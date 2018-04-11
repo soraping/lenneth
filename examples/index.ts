@@ -3,10 +3,9 @@ import {
   ServerSettings,
   ILenneth,
   IInterceptor
-} from "lenneth";
+} from "@lenneth";
 import { UserController } from "./user.controller";
 import * as logger from "koa-logger";
-
 @ServerSettings({
   imports: {
     "/apis": [UserController]

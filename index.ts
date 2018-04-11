@@ -1,5 +1,4 @@
 import { Lenneth } from "./examples";
-
 new Lenneth()
   .start()
   .then()

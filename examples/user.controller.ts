@@ -1,4 +1,4 @@
-import { Controller, Router } from "lenneth";
+import { Controller, Router } from "@lenneth";
 
 @Controller("/user")
 export class UserController {
