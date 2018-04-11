@@ -11,14 +11,14 @@
     "removeComments": true,
     "rootDir": "./",
     "outDir": "./lib",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@constants": ["src/constants"],
-      "@common": ["src/common"],
-      "@utils": ["src/utils"],
-      "@interfaces": ["src/interfaces"],
-      "@decorators": ["src/decorators"],
-      "lenneth": ["src"]
+      "@constants": ["constants"],
+      "@common": ["common"],
+      "@utils": ["utils"],
+      "@interfaces": ["interfaces"],
+      "@decorators": ["decorators"],
+      "lenneth": ["."]
     }
   },
   "exclude": ["node_modules", "lib"],

@@ -21,7 +21,7 @@ export class LennethSetting implements IServerSettings {
     this.env = env;
     this.debug = true;
     this.imports = {
-      "/debug": DebugController
+      // "/debug": DebugController
     };
   }
 
