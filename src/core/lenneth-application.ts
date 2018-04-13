@@ -1,5 +1,10 @@
+import * as path from "path";
 import * as Koa from "koa";
 import { ILennthApplication } from "@interfaces";
+import { getClass, isArray, getClassName } from "@utils";
+import { LENNETH_CONTROLLER_PATH } from "@constants";
+import { Metadata } from "@common";
+import { RouterService } from "@services";
 import { LennethSetting } from "./lenneth-setting";
 
 /**
@@ -9,7 +14,6 @@ export abstract class LennethApplication implements ILennthApplication {
   private app: Koa;
   private port?: number | string;
   private hostname?: string;
-  protected map = new Map<string, any>();
   // 配置类实例
   private lennethSetting: LennethSetting;
 
@@ -62,7 +66,41 @@ export abstract class LennethApplication implements ILennthApplication {
   /**
    * 设置controller路由
    */
-  private async loadRouters(): Promise<any> {}
+  private async loadRouters(): Promise<any> {
+    let imports = this.lennethSetting.imports;
+    this._loadControllerPath(imports);
+    // 读取路由map值
+    let decoratedRouters = RouterService.DecoratedRouters;
+    console.log(decoratedRouters);
+  }
+
+  /**
+   * 在瑞controller 路径
+   * @param imports
+   */
+  private _loadControllerPath(imports) {
+    Object.keys(imports).forEach(key => {
+      if (isArray(imports[key])) {
+        (imports[key] as any[]).forEach(item => {
+          let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(item)}`;
+          let controllerPath = path.join(
+            key,
+            Metadata.getOwn(metadataName, item)
+          );
+          Metadata.set(metadataName, controllerPath, item);
+        });
+      } else {
+        let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(
+          imports[key]
+        )}`;
+        let controllerPath = path.join(
+          key,
+          Metadata.getOwn(metadataName, imports[key])
+        );
+        Metadata.set(metadataName, controllerPath, imports[key]);
+      }
+    });
+  }
 
   /**
    * 启动服务
@@ -97,7 +135,7 @@ export abstract class LennethApplication implements ILennthApplication {
       // 载入中间件
       await this.callHook("$onMountingMiddlewares", undefined, this.app);
       // 载入路由
-      // await this.loadRouters();
+      await this.loadRouters();
       // 启动服务
       await this.startServer();
       // 启动服务完成

@@ -1,5 +1,5 @@
 /**
- *  获取类名
+ *  获取类
  * @param target
  */
 export const getClass = (target: any): any => {
@@ -8,6 +8,13 @@ export const getClass = (target: any): any => {
 
 export const getClassOrSymbol = (target: any): any => {
   return typeof target === "symbol" ? target : getClass(target);
+};
+
+/**
+ * 获取类名
+ */
+export const getClassName = (target: any): string => {
+  return typeof target === "function" ? target.name : target.constructor.name;
 };
 
 /**

@@ -20,6 +20,7 @@
       "@decorators": ["src/decorators"],
       "@constants": ["src/constants"],
       "@common": ["src/common"],
+      "@services": ["src/services"],
       "@utils": ["src/utils"],
       "@lenneth": ["./src"]
     },

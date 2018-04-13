@@ -1,8 +1,50 @@
 /**
  * 路由基本方法
+ * @Controller("/user")
+ * class UserController{
+ *    @Router({
+ *        method: 'get',
+ *        path: '/list'
+ *    })
+ *    async getUserList(){
+ *    }
+ * }
  */
-import { getClass } from "@utils";
-import { IRouterParams } from "@interfaces";
+import { IRouterParams, PathParamsType } from "@interfaces";
+import { RouterService } from "@services";
 export const Router = (params: IRouterParams): Function => {
-  return (target: any, name: string, value: ParameterDecorator) => {};
+  return (target: any, name: string, descriptor: ParameterDecorator) => {
+    RouterService.DecoratedRouters.set(
+      {
+        target,
+        ...params
+      },
+      target[name]
+    );
+  };
+};
+
+export const Get = (path: PathParamsType): Function => {
+  return Router({
+    method: "GET",
+    path
+  });
+};
+
+export const Post = (path: PathParamsType): Function => {
+  return Router({
+    method: "POST",
+    path
+  });
+};
+
+export const Put = (path: PathParamsType): Function => {
+  return Router({
+    method: "PUT",
+    path
+  });
+};
+
+export const Delete = (path: PathParamsType): Function => {
+  return Router({ method: "DELETE", path });
 };

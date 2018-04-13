@@ -6,5 +6,5 @@ export class UserController {
     method: "GET",
     path: "/test"
   })
-  async test(): Promise<any> {}
+  async testApi(): Promise<any> {}
 }
