@@ -3,6 +3,14 @@ import { IBaseInterface } from "./IBase.interface";
 
 export type IInterceptor = Koa.Middleware;
 
+export type TContext = Koa.Context;
+
+export type TMiddleware = Koa.Middleware;
+
+export type TNext = () => Promise<any>;
+
+export type TPromise = () => Promise<any>;
+
 export interface ILenneth extends IBaseInterface {
   // hook
   // 初始化

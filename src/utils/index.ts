@@ -18,7 +18,7 @@ export const getClassName = (target: any): string => {
 };
 
 /**
- *
+ *  判空
  * @param value
  */
 export const isEmpty = (value: any): boolean => {
@@ -26,7 +26,7 @@ export const isEmpty = (value: any): boolean => {
 };
 
 /**
- *
+ *  判数组
  * @param target
  */
 export const isArray = (target: any): boolean => {
@@ -46,4 +46,12 @@ export const descriptorOf = (
     (target && target.prototype) || target,
     propertyKey
   );
+};
+
+/**
+ * 生成数组
+ * @param target
+ */
+export const toArray = (target: any): any[] => {
+  return Array.isArray(target) ? target : [target];
 };
