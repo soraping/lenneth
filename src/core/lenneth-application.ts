@@ -1,9 +1,7 @@
 import * as path from "path";
 import * as Koa from "koa";
 import { ILennthApplication } from "@interfaces";
-import { getClass, isArray, getClassName } from "@utils";
-import { LENNETH_CONTROLLER_PATH } from "@constants";
-import { Metadata } from "@common";
+import { getClass } from "@utils";
 import { RouterService } from "@services";
 import { LennethSetting } from "./lenneth-setting";
 
@@ -23,7 +21,7 @@ export abstract class LennethApplication implements ILennthApplication {
     // 获取设置的service参数
     const _settingParams = LennethSetting.getMetadata(this);
     if (_settingParams) {
-      this.setSettings(_settingParams);
+      this._setSettings(_settingParams);
     }
   }
 
@@ -31,7 +29,7 @@ export abstract class LennethApplication implements ILennthApplication {
    * 设置参数
    * @param settings
    */
-  private setSettings(settings: LennethSetting) {
+  private _setSettings(settings: LennethSetting) {
     this.lennethSetting.set(settings);
   }
 
@@ -41,7 +39,7 @@ export abstract class LennethApplication implements ILennthApplication {
    * @param elseFn
    * @param args
    */
-  private callHook(key: string, elseFn = new Function(), ...args: any[]) {
+  private _callHook(key: string, elseFn = new Function(), ...args: any[]) {
     const self = this;
     if (key in self) {
       return self[key](...args);
@@ -56,7 +54,7 @@ export abstract class LennethApplication implements ILennthApplication {
    * 2. 修饰器 @Interceptor
    * 两者都有时给出警告提示，并只执行@Interceptor修饰器的方法
    */
-  private async loadInterceptor() {
+  private async _loadInterceptor() {
     const self = this;
     if ("$interceptor" in self) {
       this.use(self["$interceptor"]());
@@ -66,46 +64,21 @@ export abstract class LennethApplication implements ILennthApplication {
   /**
    * 设置controller路由
    */
-  private async loadRouters(): Promise<any> {
+  private async _loadRouters(): Promise<any> {
     let imports = this.lennethSetting.imports;
-    this._loadControllerPath(imports);
-    // 读取路由map值
-    let decoratedRouters = RouterService.DecoratedRouters;
-    console.log(decoratedRouters);
-  }
-
-  /**
-   * 在瑞controller 路径
-   * @param imports
-   */
-  private _loadControllerPath(imports) {
-    Object.keys(imports).forEach(key => {
-      if (isArray(imports[key])) {
-        (imports[key] as any[]).forEach(item => {
-          let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(item)}`;
-          let controllerPath = path.join(
-            key,
-            Metadata.getOwn(metadataName, item)
-          );
-          Metadata.set(metadataName, controllerPath, item);
-        });
-      } else {
-        let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(
-          imports[key]
-        )}`;
-        let controllerPath = path.join(
-          key,
-          Metadata.getOwn(metadataName, imports[key])
-        );
-        Metadata.set(metadataName, controllerPath, imports[key]);
-      }
+    return new Promise((res, err) => {
+      // 设置controller 路径
+      RouterService.joinControllerPath(imports);
+      // 载入路由
+      RouterService.loadRouter(this.app);
+      res();
     });
   }
 
   /**
    * 启动服务
    */
-  private async startServer(): Promise<any> {
+  private async _startServer(): Promise<any> {
     let { hostname, port } = this.lennethSetting.getHttpPort();
     return new Promise((res, err) => {
       this.app.listen(<number>port, hostname);
@@ -129,19 +102,19 @@ export abstract class LennethApplication implements ILennthApplication {
     const startTime = new Date();
     try {
       // 初始化(DB)
-      await this.callHook("$onInit");
+      await this._callHook("$onInit");
       // 拦截器
-      await this.loadInterceptor();
+      await this._loadInterceptor();
       // 载入中间件
-      await this.callHook("$onMountingMiddlewares", undefined, this.app);
+      await this._callHook("$onMountingMiddlewares", undefined, this.app);
       // 载入路由
-      await this.loadRouters();
+      await this._loadRouters();
       // 启动服务
-      await this.startServer();
+      await this._startServer();
       // 启动服务完成
-      await this.callHook("$onReady");
+      await this._callHook("$onReady");
     } catch (error) {
-      this.callHook("$onServerInitError", undefined, error);
+      this._callHook("$onServerInitError", undefined, error);
       return Promise.reject(error);
     }
   }

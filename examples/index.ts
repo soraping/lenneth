@@ -23,9 +23,7 @@ export class Lenneth extends LennethApplication implements ILenneth {
   // 加载中间件
   $onMountingMiddlewares() {
     console.log("start $onMountingMiddlewares");
-    this.use(logger()).use(async (ctx, next) => {
-      ctx.body = "hello world";
-    });
+    this.use(logger());
   }
   // 拦截器
   $interceptor(): IInterceptor {

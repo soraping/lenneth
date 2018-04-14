@@ -6,5 +6,7 @@ export class UserController {
     method: "GET",
     path: "/test"
   })
-  async testApi(): Promise<any> {}
+  async testApi(ctx): Promise<any> {
+    ctx.body = "hello world";
+  }
 }
