@@ -3,6 +3,7 @@
  */
 import { Metadata } from "@common";
 import { Type } from "@interfaces";
+import { LENNETH_CONTROLLER_PARAMS } from "@constants";
 
 /**
  * 属性修饰器创建方法
@@ -31,8 +32,27 @@ const decorate = (
   };
 };
 
-export const PathParams = (paramsKey: string | any) => {};
+export const QueryParams = (paramsKey: string | any): ParameterDecorator => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ): any => {
+    let key = `${LENNETH_CONTROLLER_PARAMS}_${propertyKey}`;
+    let params: Array<string | any> = Metadata.getOwn(key, target, propertyKey);
+
+    if (!params) {
+      params = [paramsKey];
+    } else if (params.indexOf(paramsKey) == -1) {
+      params.unshift(paramsKey);
+    } else {
+      console.error(`参数${propertyKey}重名`);
+    }
+
+    Metadata.set(key, params, target, propertyKey);
+  };
+};
 
 export const BodyParams = (paramsKey: string | any) => {};
 
-export const QueryParams = (paramsKey: string | any) => {};
+export const PathParams = (paramsKey: string | any) => {};

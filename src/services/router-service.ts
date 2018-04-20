@@ -7,7 +7,13 @@ import * as Router from "koa-router";
 import { PathParamsType, IRouterParams } from "@interfaces";
 import { LENNETH_CONTROLLER_PATH } from "@constants";
 import { Metadata } from "@common";
-import { getClass, isArray, getClassName } from "@utils";
+import {
+  getClass,
+  isArray,
+  toArray,
+  getClassName,
+  toAsyncMiddleware
+} from "@utils";
 
 type TRouterMiddleware = Router.IMiddleware;
 
@@ -29,8 +35,13 @@ export class RouterService {
   static loadRouter(app: Koa) {
     for (let [config, controllers] of this.DecoratedRouters) {
       if (!isArray(controllers)) {
-        controllers = [<TRouterMiddleware>controllers];
+        controllers = toArray(<TRouterMiddleware>controllers);
       }
+      // 重置数组内中间件方法
+      controllers = (controllers as TRouterMiddleware[]).map(item =>
+        toAsyncMiddleware(item, config.target)
+      );
+
       let routerPath = path.join(
         Metadata.getOwn(
           `${LENNETH_CONTROLLER_PATH}_${getClassName(config.target)}`,

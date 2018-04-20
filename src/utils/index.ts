@@ -1,3 +1,7 @@
+import { Metadata } from "@common";
+import { TApiMiddleware, TContext, TNext } from "@interfaces";
+import { LENNETH_CONTROLLER_PARAMS } from "@constants";
+
 /**
  *  获取类
  * @param target
@@ -54,4 +58,20 @@ export const descriptorOf = (
  */
 export const toArray = (target: any): any[] => {
   return Array.isArray(target) ? target : [target];
+};
+
+/**
+ * 在每个方法的最外层封装一个原装的中间件，
+ * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
+ * @param middleware
+ */
+export const toAsyncMiddleware = (middleware: TApiMiddleware, target: any) => {
+  let params: Array<any | string> = Metadata.getOwn(
+    `${LENNETH_CONTROLLER_PARAMS}_${middleware.name}`,
+    target,
+    middleware.name
+  );
+  return async (ctx: TContext, next: TNext) => {
+    return middleware(...params, ctx, next);
+  };
 };

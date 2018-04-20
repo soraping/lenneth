@@ -7,6 +7,12 @@ export type TContext = Koa.Context;
 
 export type TMiddleware = Koa.Middleware;
 
+export type TResponse = Koa.Response;
+
+export type TRequest = Koa.Request;
+
+export type TApiMiddleware = (...args: any[]) => Promise<any>;
+
 export type TNext = () => Promise<any>;
 
 export type TPromise = () => Promise<any>;
