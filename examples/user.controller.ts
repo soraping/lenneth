@@ -30,11 +30,15 @@ export class UserController {
   @Get("/detail")
   // @UseBefore(UserMiddleware)
   async test2Api(
-    @QueryParams("userId") userId: string,
-    @QueryParams("userName") userName: string,
-    @Request() request: TRequest,
-    @Response() response: TResponse
+    @QueryParams("userId") id: string,
+    @QueryParams("userName") name: string
+    // @Request() request: TRequest,
+    // @Response() response: TResponse
   ) {
     console.log("test2Api");
+    console.log("userId", id);
+    console.log("userName", name);
+    // console.log("request", request);
+    // console.log("response", response);
   }
 }

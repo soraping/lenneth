@@ -38,9 +38,9 @@ export const isArray = (target: any): boolean => {
 };
 
 /**
- *
- * @param target
- * @param propertyKey
+ * 获取该属性的描述对象
+ * @param target 类
+ * @param propertyKey 目标属性
  */
 export const descriptorOf = (
   target: any,
@@ -72,6 +72,9 @@ export const toAsyncMiddleware = (middleware: TApiMiddleware, target: any) => {
     middleware.name
   );
   return async (ctx: TContext, next: TNext) => {
+    // todo ,需要分辨出请求参数
+    params[0] = ctx.query.userId;
+    params[1] = ctx.query.userName;
     return middleware(...params, ctx, next);
   };
 };

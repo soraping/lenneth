@@ -3,7 +3,16 @@
  */
 import { Metadata } from "@common";
 import { Type } from "@interfaces";
+import { Autowired } from "../services";
 import { LENNETH_CONTROLLER_PARAMS } from "@constants";
+import { ParamsService } from "@services";
+
+class Params {
+  @Autowired() private paramsService: ParamsService;
+  getName() {
+    this.paramsService.getName();
+  }
+}
 
 /**
  * 属性修饰器创建方法

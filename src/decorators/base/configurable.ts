@@ -8,7 +8,7 @@
  *      private test;
  * }
  */
-import { descriptorOf } from "../../utils";
+import { descriptorOf } from "@utils";
 
 export const Configurable = (value: boolean = true): Function => {
   return (target: any, propertyKey: string) => {
