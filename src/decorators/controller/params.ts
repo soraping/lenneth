@@ -9,9 +9,9 @@ import { ParamsService } from "@services";
 
 class Params {
   @Autowired() private paramsService: ParamsService;
-  getName() {
-    this.paramsService.getName();
-  }
+  // getmyname() {
+  //   this.paramsService.getName();
+  // }
 }
 
 /**

@@ -1,15 +1,15 @@
 /**
  * 注入service，类属性修饰器
  */
+import "reflect-metadata";
 import { descriptorOf } from "@utils";
 import { Metadata } from "@common";
-import { LENNETH_SERVICE_PATH } from "@constants";
+import { LENNETH_SERVICE_PATH, DESIGN_TYPE } from "@constants";
 
 export const Autowired = (value: string = ""): Function => {
   return (target: any, propertyKey: string) => {
-    const descriptor = descriptorOf(target, propertyKey);
     // 获取该属性的类型
-    let typeName = typeof propertyKey;
+    let typeName = Reflect.getMetadata(DESIGN_TYPE, target, propertyKey);
     let TargetService = Metadata.getOwn(
       `${LENNETH_SERVICE_PATH}_${typeName}`,
       typeName

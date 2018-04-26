@@ -5,7 +5,7 @@ import { Metadata } from "@common";
 import { getClassName } from "@utils";
 import { LENNETH_SERVICE_PATH } from "@constants";
 export const Service = () => {
-  return (target: any): void => {
+  return (target: any) => {
     Metadata.set(
       `${LENNETH_SERVICE_PATH}_${getClassName(target)}`,
       target,

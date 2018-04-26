@@ -24,7 +24,7 @@
       "@utils": ["src/utils"],
       "@lenneth": ["./src"]
     },
-    "lib": ["es6", "dom"]
+    "lib": ["es6", "dom", "es7"]
   },
   "exclude": ["node_modules", "build"],
   "include": ["./typings", "./src/**/*.ts", "index.ts", "./examples/**/*.ts"],
