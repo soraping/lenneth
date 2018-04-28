@@ -4,6 +4,7 @@
 import { IServerSettings, TImports } from "@interfaces";
 import { Env, Metadata } from "@common";
 import { SERVER_SETTINGS } from "@constants";
+import { Autowired } from "@decorators";
 import { DebugController } from "./debug.controller";
 
 // 根目录
@@ -12,62 +13,26 @@ const rootDir = process.cwd();
 const env = (process.env.NODE_ENV as Env) || Env.DEV;
 
 export class LennethSetting implements IServerSettings {
-  // 存储设置参数
-  protected map = new Map<string, any>();
+  @Autowired(rootDir) rootDir: string;
+  @Autowired("8080") port: string | number;
+  @Autowired(env) env: string;
+  @Autowired({ "/debug": DebugController })
+  imports: TImports;
 
-  constructor() {
-    this.rootDir = rootDir;
-    this.port = 8080;
-    this.env = env;
-    this.debug = true;
-    this.imports = {
-      // "/debug": DebugController
-    };
-  }
+  /**
+   * {
+   *    imports,
+   *    debug,
+   *    env
+   * }
+   */
+  static serverSettingMap = new Map<string, any>();
 
-  set rootDir(path: string) {
-    this.map.set("rootDir", path);
-  }
-
-  get rootDir(): string {
-    return this.map.get("rootDir");
-  }
-
-  set imports(values: TImports) {
-    let imports = this.imports;
-    let newImports = { ...imports, ...values };
-    this.map.set("imports", newImports);
-  }
-
-  get imports(): TImports {
-    return this.map.get("imports");
-  }
-
-  set port(value: string | number) {
-    this.map.set("port", value);
-  }
-
-  get port(): string | number {
-    return this.map.get("port");
-  }
-
-  set env(env: string) {
-    this.map.set("env", env);
-  }
-
-  get env(): string {
-    return this.map.get("env");
-  }
-
-  get debug(): boolean {
-    return this.map.get("debug");
-  }
-
-  set debug(value: boolean) {
-    this.map.set("debug", value);
-  }
-
-  static getMetadata(target: any) {
+  /**
+   * 子类实例对象,这个是关键的方法，用来获取设置参数的
+   * @param target
+   */
+  getMetadata(target: any) {
     return Metadata.getOwn(SERVER_SETTINGS, target);
   }
 
@@ -76,24 +41,24 @@ export class LennethSetting implements IServerSettings {
    * @param propertyKey
    * @param value
    */
-  set(propertyKey: string | IServerSettings, value?: any): LennethSetting {
+  setMap(propertyKey: string | IServerSettings, value?: any): void {
     if (typeof propertyKey == "string") {
-      this.map.set(propertyKey, value);
+      LennethSetting.serverSettingMap.set(propertyKey, value);
     } else {
-      const self: LennethSetting = this;
-      Object.keys(propertyKey).forEach(key => {
-        const descriptor = Object.getOwnPropertyDescriptor(
-          LennethSetting.prototype,
-          key
-        );
-        if (descriptor && ["set", "map"].indexOf(key) === -1) {
-          self[key] = propertyKey[key];
-        } else {
-          this.set(key, propertyKey[key]);
-        }
+      let setting = {
+        rootDir: this.rootDir,
+        port: this.port,
+        env: this.env,
+        ...propertyKey
+      };
+      // imports 特殊处理
+      let _imports = this.imports;
+      let imports = setting["imports"];
+      setting["imports"] = { ...imports, ..._imports };
+      Object.keys(setting).forEach(key => {
+        this.setMap(key, setting[key]);
       });
     }
-    return this;
   }
 
   /**
@@ -102,6 +67,6 @@ export class LennethSetting implements IServerSettings {
    */
   getHttpPort(): { hostname: string; port: string | number } {
     let hostname = "0.0.0.0";
-    return { hostname, port: this.map.get("port") };
+    return { hostname, port: LennethSetting.serverSettingMap.get("port") };
   }
 }

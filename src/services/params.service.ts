@@ -1,6 +1,6 @@
 import { Service } from "@decorators";
 
-// @Service()
+@Service()
 export class ParamsService {
   getName() {
     return "haha";

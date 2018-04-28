@@ -4,6 +4,7 @@
 import * as path from "path";
 import * as Koa from "koa";
 import * as Router from "koa-router";
+import { Autowired } from "@decorators";
 import { PathParamsType, IRouterParams } from "@interfaces";
 import { LENNETH_CONTROLLER_PATH } from "@constants";
 import { Metadata } from "@common";
@@ -18,7 +19,8 @@ import {
 type TRouterMiddleware = Router.IMiddleware;
 
 export class RouterService {
-  static router = new Router();
+  // 注入路由
+  @Autowired() private router: Router;
 
   constructor() {}
   /**
@@ -32,8 +34,8 @@ export class RouterService {
   /**
    * 载入路由
    */
-  static loadRouter(app: Koa) {
-    for (let [config, controllers] of this.DecoratedRouters) {
+  loadRouter(app: Koa) {
+    for (let [config, controllers] of RouterService.DecoratedRouters) {
       if (!isArray(controllers)) {
         controllers = toArray(<TRouterMiddleware>controllers);
       }
@@ -62,7 +64,7 @@ export class RouterService {
    * 拼接controller 路径
    * @param imports
    */
-  static joinControllerPath(imports) {
+  joinControllerPath(imports) {
     Object.keys(imports).forEach(key => {
       if (isArray(imports[key])) {
         (imports[key] as any[]).forEach(item => {

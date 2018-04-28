@@ -26,4 +26,8 @@ export class Metadata {
       ? Reflect.getOwnMetadata(key, getClass(target), propertyKey)
       : Reflect.getOwnMetadata(key, getClass(target));
   }
+
+  static getType(target, propertyKey?: string | symbol) {
+    return Reflect.getMetadata(DESIGN_TYPE, target, propertyKey);
+  }
 }

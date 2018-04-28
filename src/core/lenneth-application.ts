@@ -3,23 +3,22 @@ import * as Koa from "koa";
 import { ILennthApplication } from "@interfaces";
 import { getClass } from "@utils";
 import { RouterService } from "@services";
+import { Autowired } from "@decorators";
 import { LennethSetting } from "./lenneth-setting";
 
 /**
  *  服务抽象类，定义实现方法和钩子函数
  */
 export abstract class LennethApplication implements ILennthApplication {
-  private app: Koa;
-  private port?: number | string;
-  private hostname?: string;
+  @Autowired() private app: Koa;
   // 配置类实例
-  private lennethSetting: LennethSetting;
+  @Autowired() private lennethSetting: LennethSetting;
+  // 路由服务
+  @Autowired() private routerService: RouterService;
 
   constructor() {
-    this.app = new Koa();
-    this.lennethSetting = new LennethSetting();
     // 获取设置的service参数
-    const _settingParams = LennethSetting.getMetadata(this);
+    const _settingParams = this.lennethSetting.getMetadata(this);
     if (_settingParams) {
       this._setSettings(_settingParams);
     }
@@ -30,7 +29,7 @@ export abstract class LennethApplication implements ILennthApplication {
    * @param settings
    */
   private _setSettings(settings: LennethSetting) {
-    this.lennethSetting.set(settings);
+    this.lennethSetting.setMap(settings);
   }
 
   /**
@@ -65,12 +64,12 @@ export abstract class LennethApplication implements ILennthApplication {
    * 设置controller路由
    */
   private async _loadRouters(): Promise<any> {
-    let imports = this.lennethSetting.imports;
+    let imports = LennethSetting.serverSettingMap.get("imports");
     return new Promise((res, err) => {
       // 设置controller 路径
-      RouterService.joinControllerPath(imports);
+      this.routerService.joinControllerPath(imports);
       // 载入路由
-      RouterService.loadRouter(this.app);
+      this.routerService.loadRouter(this.app);
       res();
     });
   }

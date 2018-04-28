@@ -3,16 +3,9 @@
  */
 import { Metadata } from "@common";
 import { Type } from "@interfaces";
-import { Autowired } from "../services";
+import { Autowired } from "@decorators";
 import { LENNETH_CONTROLLER_PARAMS } from "@constants";
 import { ParamsService } from "@services";
-
-class Params {
-  @Autowired() private paramsService: ParamsService;
-  // getmyname() {
-  //   this.paramsService.getName();
-  // }
-}
 
 /**
  * 属性修饰器创建方法
