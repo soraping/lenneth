@@ -41,7 +41,8 @@ export class RouterService {
       }
       // 重置数组内中间件方法
       controllers = (controllers as TRouterMiddleware[]).map(item =>
-        toAsyncMiddleware(item, config.target)
+        // todo 缺少参数params
+        toAsyncMiddleware(item)
       );
 
       let routerPath = path.join(

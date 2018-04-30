@@ -1,5 +1,6 @@
 import * as path from "path";
 import * as Koa from "koa";
+import * as bodyParser from "koa-bodyparser";
 import { ILennthApplication } from "@interfaces";
 import { getClass } from "@utils";
 import { RouterService } from "@services";
@@ -61,6 +62,16 @@ export abstract class LennethApplication implements ILennthApplication {
   }
 
   /**
+   * bodyParser
+   */
+  private async _loadBodyParser(): Promise<any> {
+    return new Promise((res, err) => {
+      this.app.use(bodyParser());
+      res();
+    });
+  }
+
+  /**
    * 设置controller路由
    */
   private async _loadRouters(): Promise<any> {
@@ -106,6 +117,8 @@ export abstract class LennethApplication implements ILennthApplication {
       await this._loadInterceptor();
       // 载入中间件
       await this._callHook("$onMountingMiddlewares", undefined, this.app);
+      // 载入bodyParser
+      await this._loadBodyParser();
       // 载入路由
       await this._loadRouters();
       // 启动服务

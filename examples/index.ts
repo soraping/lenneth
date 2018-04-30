@@ -27,7 +27,7 @@ export class Lenneth extends LennethApplication implements ILenneth {
   }
   // 拦截器
   $interceptor(): IInterceptor {
-    console.log("interceptor");
+    console.log("start interceptor");
     return async (ctx, next) => {
       console.log(ctx.method);
       await next();

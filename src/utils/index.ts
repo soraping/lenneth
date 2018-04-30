@@ -1,6 +1,5 @@
 import { Metadata } from "@common";
 import { TApiMiddleware, TContext, TNext } from "@interfaces";
-import { LENNETH_CONTROLLER_PARAMS } from "@constants";
 
 /**
  *  获取类
@@ -63,18 +62,17 @@ export const toArray = (target: any): any[] => {
 /**
  * 在每个方法的最外层封装一个原装的中间件，
  * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
- * @param middleware
+ * @param middleware 新lenneth中间件
+ * @param params 参数转换后数组序列
  */
-export const toAsyncMiddleware = (middleware: TApiMiddleware, target: any) => {
-  let params: Array<any | string> = Metadata.getOwn(
-    `${LENNETH_CONTROLLER_PARAMS}_${middleware.name}`,
-    target,
-    middleware.name
-  );
+export const toAsyncMiddleware = (
+  middleware: TApiMiddleware,
+  params?: any[]
+) => {
   return async (ctx: TContext, next: TNext) => {
-    // todo ,需要分辨出请求参数
-    params[0] = ctx.query.userId;
-    params[1] = ctx.query.userName;
-    return middleware(...params, ctx, next);
+    if (params) {
+      return middleware(...params, ctx, next);
+    }
+    return middleware(ctx, next);
   };
 };
