@@ -10,9 +10,28 @@ export const Service = () => {
 };
 
 /**
+ * 赋值
+ * @param value
+ */
+export const Value = (value: string | any = "") => {
+  return (target: any, propertyKey: string) => {
+    const descriptor = descriptorOf(target, propertyKey) || {
+      writable: true,
+      configurable: true
+    };
+    descriptor.value = value;
+    Object.defineProperty(
+      (target && target.prototype) || target,
+      propertyKey,
+      descriptor
+    );
+  };
+};
+
+/**
  * 注入service，类属性修饰器
  */
-export const Autowired = (value: object | string = ""): Function => {
+export const Autowired = (): Function => {
   return (target: any, propertyKey: string) => {
     // 获取该属性的类型
     let typeClass = Metadata.getType(target, propertyKey);
@@ -21,11 +40,8 @@ export const Autowired = (value: object | string = ""): Function => {
       writable: true,
       configurable: true
     };
-    descriptor.value = value
-      ? value
-      : typeof typeClass == "object"
-        ? typeClass.prototype
-        : new typeClass();
+    descriptor.value =
+      typeof typeClass == "object" ? typeClass.prototype : new typeClass();
     Object.defineProperty(
       (target && target.prototype) || target,
       propertyKey,

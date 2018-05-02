@@ -4,7 +4,7 @@
 import { IServerSettings, TImports } from "@interfaces";
 import { Env, Metadata } from "@common";
 import { SERVER_SETTINGS } from "@constants";
-import { Autowired } from "@decorators";
+import { Value } from "@decorators";
 import { DebugController } from "./debug.controller";
 
 // 根目录
@@ -13,10 +13,10 @@ const rootDir = process.cwd();
 const env = (process.env.NODE_ENV as Env) || Env.DEV;
 
 export class LennethSetting implements IServerSettings {
-  @Autowired(rootDir) rootDir: string;
-  @Autowired("8080") port: string | number;
-  @Autowired(env) env: string;
-  @Autowired({ "/debug": DebugController })
+  @Value(rootDir) rootDir: string;
+  @Value("8080") port: string | number;
+  @Value(env) env: string;
+  @Value({ "/debug": DebugController })
   imports: TImports;
 
   /**

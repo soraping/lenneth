@@ -6,11 +6,14 @@ import {
   UseBefore,
   Request,
   Response,
+  Autowired,
   TContext,
   TNext,
   TRequest,
   TResponse
 } from "@lenneth";
+
+import { UserService } from "./user.service";
 
 // const UserMiddleware = async (ctx: TContext, next: TNext): Promise<any> => {
 //   console.log("UserMiddleware");
@@ -19,6 +22,8 @@ import {
 
 @Controller("/user")
 export class UserController {
+  @Autowired() userService: UserService;
+
   // @Router({
   //   method: "GET",
   //   path: "/test"
@@ -40,5 +45,6 @@ export class UserController {
     console.log("userName", name);
     // console.log("request", request);
     // console.log("response", response);
+    // this.userService.getUserInfo();
   }
 }
