@@ -40,8 +40,7 @@ export const Autowired = (): Function => {
       writable: true,
       configurable: true
     };
-    descriptor.value =
-      typeof typeClass == "object" ? typeClass.prototype : new typeClass();
+    descriptor.value = new typeClass();
     Object.defineProperty(
       (target && target.prototype) || target,
       propertyKey,

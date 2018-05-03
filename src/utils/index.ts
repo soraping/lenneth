@@ -62,18 +62,21 @@ export const toArray = (target: any): any[] => {
 /**
  * 在每个方法的最外层封装一个原装的中间件，
  * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
+ * @param target 关系this指向
  * @param middleware 新lenneth中间件
  * @param key 存储map key
  */
 export const toAsyncMiddleware = (
+  target: Object | any,
   middleware: TApiMiddleware,
   key?: string,
   cb?: (key: string, ctx: TContext) => any[]
 ) => {
   return async (ctx: TContext, next: TNext) => {
     if (key) {
-      return middleware(...cb(key, ctx), ctx, next);
+      // 此处一定要用call来重新设置this指向
+      return middleware.call(target, ...cb(key, ctx), ctx, next);
     }
-    return middleware(ctx, next);
+    return middleware.call(target, ctx, next);
   };
 };

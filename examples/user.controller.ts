@@ -23,7 +23,7 @@ import { UserService } from "./user.service";
 
 @Controller("/user")
 export class UserController {
-  @Autowired() userService: UserService;
+  @Autowired() private userService: UserService;
 
   // @Router({
   //   method: "GET",
@@ -50,7 +50,7 @@ export class UserController {
     console.log("HeaderParams", header);
     console.log("request", request);
     console.log("response", response);
-    // this.userService.getUserInfo();
-    response.body = "hello world";
+
+    response.body = this.userService.getUserInfo();
   }
 }

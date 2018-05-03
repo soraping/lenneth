@@ -52,6 +52,7 @@ export class RouterService {
         );
         // 转换方法
         return toAsyncMiddleware(
+          config.target,
           item,
           paramsMapKey,
           this.paramsService.paramsToList
