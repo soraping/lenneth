@@ -4,5 +4,8 @@
 export enum ParamsType {
   QUERYPARAMS = "query",
   BODYPARAMS = "body",
-  PATHPARAMS = "path"
+  PATHPARAMS = "path",
+  REQUEST = "request",
+  RESPONSE = "response",
+  HEADERPARAMS = "header"
 }

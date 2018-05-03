@@ -2,8 +2,6 @@
  * Create a parameters decorators
  */
 import { Metadata, ParamsType } from "@common";
-import { Type, IParamsMapValue } from "@interfaces";
-import { Autowired } from "@decorators";
 import { ParamsService } from "@services";
 import { toArray, getClassName } from "@utils";
 
@@ -71,6 +69,42 @@ export const PathParams = (paramsKey: string | any) => {
       parameterIndex,
       paramsKey,
       ParamsType.PATHPARAMS
+    );
+  };
+};
+
+export const Response = () => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    decorate(target, propertyKey, parameterIndex, "", ParamsType.RESPONSE);
+  };
+};
+
+export const Request = () => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    decorate(target, propertyKey, parameterIndex, "", ParamsType.REQUEST);
+  };
+};
+
+export const HeaderParams = (paramsKey: string | any = "") => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    decorate(
+      target,
+      propertyKey,
+      parameterIndex,
+      paramsKey,
+      ParamsType.HEADERPARAMS
     );
   };
 };

@@ -34,11 +34,27 @@ export class ParamsService extends BaseService {
     return ParamsService.paramsMap.get(paramsMapKey).map(item => {
       switch (item.paramsType) {
         case ParamsType.PATHPARAMS:
+          // path
           return ctx.params[item.paramsKey];
         case ParamsType.QUERYPARAMS:
+          // query
           return ctx.request.query[item.paramsKey];
         case ParamsType.BODYPARAMS:
-          return ctx.request.body;
+          // body
+          return item.paramsKey
+            ? ctx.request.body[item.paramsKey]
+            : ctx.request.body;
+        case ParamsType.REQUEST:
+          // request
+          return ctx.request;
+        case ParamsType.RESPONSE:
+          // response
+          return ctx.response;
+        case ParamsType.HEADERPARAMS:
+          // header
+          return item.paramsKey
+            ? ctx.request.headers[item.paramsKey]
+            : ctx.request.headers;
         default:
           break;
       }

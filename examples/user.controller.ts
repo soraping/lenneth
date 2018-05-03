@@ -3,13 +3,13 @@ import {
   Router,
   QueryParams,
   PathParams,
+  HeaderParams,
   Get,
   UseBefore,
   Request,
   Response,
   Autowired,
   TContext,
-  TNext,
   TRequest,
   TResponse
 } from "@lenneth";
@@ -38,16 +38,19 @@ export class UserController {
   async test2Api(
     @PathParams("id") aid: string,
     @QueryParams("userId") id: string,
-    @QueryParams("userName") name: string
-    // @Request() request: TRequest,
-    // @Response() response: TResponse
+    @QueryParams("userName") name: string,
+    @HeaderParams() header: any,
+    @Request() request: TRequest,
+    @Response() response: TResponse
   ) {
     console.log("test2Api");
     console.log("pathid", aid);
     console.log("userId", id);
     console.log("userName", name);
-    // console.log("request", request);
-    // console.log("response", response);
+    console.log("HeaderParams", header);
+    console.log("request", request);
+    console.log("response", response);
     // this.userService.getUserInfo();
+    response.body = "hello world";
   }
 }
