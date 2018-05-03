@@ -63,7 +63,7 @@ export const toArray = (target: any): any[] => {
  * 在每个方法的最外层封装一个原装的中间件，
  * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
  * @param middleware 新lenneth中间件
- * @param params 参数转换后数组序列
+ * @param key 存储map key
  */
 export const toAsyncMiddleware = (
   middleware: TApiMiddleware,

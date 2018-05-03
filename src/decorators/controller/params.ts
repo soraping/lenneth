@@ -16,8 +16,9 @@ const decorate = (
 ) => {
   let paramsMap = ParamsService.paramsMap;
   // 拼接map字符key 类名_方法名
-  let paramsMapKey = `${getClassName(target)}_${propertyKey}`;
+  let paramsMapKey = ParamsService.fomartParamsMapKey(target, propertyKey);
   let paramsValueList = toArray(paramsMap.get(paramsMapKey));
+  // 按照序列填充数组
   paramsValueList[parameterIndex] = {
     parameterIndex,
     paramsType: type,
@@ -42,7 +43,7 @@ export const QueryParams = (paramsKey: string | any): ParameterDecorator => {
   };
 };
 
-export const BodyParams = (paramsKey: string | any) => {
+export const RequestBody = (paramsKey: string | any) => {
   return (
     target: Object,
     propertyKey: string | symbol,

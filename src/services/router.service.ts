@@ -45,8 +45,12 @@ export class RouterService {
       }
       // 重置数组内中间件方法
       controllers = (controllers as TRouterMiddleware[]).map(item => {
-        // todo 缺少参数params
-        let paramsMapKey = `${getClassName(config.target)}_${item.name}`;
+        // 整理参数
+        let paramsMapKey = ParamsService.fomartParamsMapKey(
+          config.target,
+          item.name
+        );
+        // 转换方法
         return toAsyncMiddleware(
           item,
           paramsMapKey,
