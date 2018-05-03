@@ -56,7 +56,7 @@ export const descriptorOf = (
  * @param target
  */
 export const toArray = (target: any): any[] => {
-  return Array.isArray(target) ? target : [target];
+  return target ? (Array.isArray(target) ? target : [target]) : [];
 };
 
 /**
@@ -67,11 +67,12 @@ export const toArray = (target: any): any[] => {
  */
 export const toAsyncMiddleware = (
   middleware: TApiMiddleware,
-  params?: any[]
+  key?: string,
+  cb?: (key: string, ctx: TContext) => any[]
 ) => {
   return async (ctx: TContext, next: TNext) => {
-    if (params) {
-      return middleware(...params, ctx, next);
+    if (key) {
+      return middleware(...cb(key, ctx), ctx, next);
     }
     return middleware(ctx, next);
   };

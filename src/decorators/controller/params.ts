@@ -1,37 +1,29 @@
 /**
  * Create a parameters decorators
  */
-import { Metadata } from "@common";
-import { Type } from "@interfaces";
+import { Metadata, ParamsType } from "@common";
+import { Type, IParamsMapValue } from "@interfaces";
 import { Autowired } from "@decorators";
-import { LENNETH_CONTROLLER_PARAMS } from "@constants";
 import { ParamsService } from "@services";
+import { toArray, getClassName } from "@utils";
 
-/**
- * 属性修饰器创建方法
- * @param token
- * @param options
- */
 const decorate = (
-  token: Type<any> | symbol,
-  options: any
-): ParameterDecorator => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ): any => {
-    if (typeof parameterIndex === "number") {
-      const settings = Object.assign(
-        {
-          target,
-          propertyKey,
-          parameterIndex
-        },
-        options
-      );
-    }
+  target: Object,
+  propertyKey: string | symbol,
+  parameterIndex: number,
+  paramsKey: string,
+  type: ParamsType
+) => {
+  let paramsMap = ParamsService.paramsMap;
+  // 拼接map字符key 类名_方法名
+  let paramsMapKey = `${getClassName(target)}_${propertyKey}`;
+  let paramsValueList = toArray(paramsMap.get(paramsMapKey));
+  paramsValueList[parameterIndex] = {
+    parameterIndex,
+    paramsType: type,
+    paramsKey
   };
+  ParamsService.paramsMap.set(paramsMapKey, paramsValueList);
 };
 
 export const QueryParams = (paramsKey: string | any): ParameterDecorator => {
@@ -40,21 +32,44 @@ export const QueryParams = (paramsKey: string | any): ParameterDecorator => {
     propertyKey: string | symbol,
     parameterIndex: number
   ): any => {
-    let key = `${LENNETH_CONTROLLER_PARAMS}_${propertyKey}`;
-    let params: Array<string | any> = Metadata.getOwn(key, target, propertyKey);
-
-    if (!params) {
-      params = [paramsKey];
-    } else if (params.indexOf(paramsKey) == -1) {
-      params.unshift(paramsKey);
-    } else {
-      console.error(`参数${propertyKey}重名`);
-    }
-
-    Metadata.set(key, params, target, propertyKey);
+    decorate(
+      target,
+      propertyKey,
+      parameterIndex,
+      paramsKey,
+      ParamsType.QUERYPARAMS
+    );
   };
 };
 
-export const BodyParams = (paramsKey: string | any) => {};
+export const BodyParams = (paramsKey: string | any) => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ): any => {
+    decorate(
+      target,
+      propertyKey,
+      parameterIndex,
+      paramsKey,
+      ParamsType.BODYPARAMS
+    );
+  };
+};
 
-export const PathParams = (paramsKey: string | any) => {};
+export const PathParams = (paramsKey: string | any) => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ): any => {
+    decorate(
+      target,
+      propertyKey,
+      parameterIndex,
+      paramsKey,
+      ParamsType.PATHPARAMS
+    );
+  };
+};

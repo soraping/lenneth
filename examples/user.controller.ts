@@ -2,6 +2,7 @@ import {
   Controller,
   Router,
   QueryParams,
+  PathParams,
   Get,
   UseBefore,
   Request,
@@ -32,15 +33,17 @@ export class UserController {
   //   ctx.body = "hello world";
   // }
 
-  @Get("/detail")
+  @Get("/detail/:id")
   // @UseBefore(UserMiddleware)
   async test2Api(
+    @PathParams("id") aid: string,
     @QueryParams("userId") id: string,
     @QueryParams("userName") name: string
     // @Request() request: TRequest,
     // @Response() response: TResponse
   ) {
     console.log("test2Api");
+    console.log("pathid", aid);
     console.log("userId", id);
     console.log("userName", name);
     // console.log("request", request);

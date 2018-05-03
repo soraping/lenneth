@@ -14,7 +14,8 @@ const env = (process.env.NODE_ENV as Env) || Env.DEV;
 
 export class LennethSetting implements IServerSettings {
   @Value(rootDir) rootDir: string;
-  @Value("8080") port: string | number;
+  @Value(8080)
+  port: string | number;
   @Value(env) env: string;
   @Value({ "/debug": DebugController })
   imports: TImports;

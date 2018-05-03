@@ -8,6 +8,7 @@ import { Autowired } from "@decorators";
 import { PathParamsType, IRouterParams } from "@interfaces";
 import { LENNETH_CONTROLLER_PATH } from "@constants";
 import { Metadata } from "@common";
+import { ParamsService } from "./params.service";
 import {
   getClass,
   isArray,
@@ -21,6 +22,9 @@ type TRouterMiddleware = Router.IMiddleware;
 export class RouterService {
   // 注入路由
   @Autowired() private router: Router;
+
+  // 类方法参数服务
+  @Autowired() private paramsService: ParamsService;
 
   constructor() {}
   /**
@@ -40,10 +44,15 @@ export class RouterService {
         controllers = toArray(<TRouterMiddleware>controllers);
       }
       // 重置数组内中间件方法
-      controllers = (controllers as TRouterMiddleware[]).map(item =>
+      controllers = (controllers as TRouterMiddleware[]).map(item => {
         // todo 缺少参数params
-        toAsyncMiddleware(item)
-      );
+        let paramsMapKey = `${getClassName(config.target)}_${item.name}`;
+        return toAsyncMiddleware(
+          item,
+          paramsMapKey,
+          this.paramsService.paramsToList
+        );
+      });
 
       let routerPath = path.join(
         Metadata.getOwn(
