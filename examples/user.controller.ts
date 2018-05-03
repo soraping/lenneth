@@ -4,7 +4,9 @@ import {
   QueryParams,
   PathParams,
   HeaderParams,
+  RequestBody,
   Get,
+  Post,
   UseBefore,
   Request,
   Response,
@@ -15,26 +17,23 @@ import {
 } from "@lenneth";
 
 import { UserService } from "./user.service";
-
-// const UserMiddleware = async (ctx: TContext, next: TNext): Promise<any> => {
-//   console.log("UserMiddleware");
-//   await next();
-// };
+import { UserAuth } from "./auth.middleware";
 
 @Controller("/user")
 export class UserController {
   @Autowired() private userService: UserService;
 
-  // @Router({
-  //   method: "GET",
-  //   path: "/test"
-  // })
-  // async testApi(ctx: TContext): Promise<any> {
-  //   ctx.body = "hello world";
-  // }
+  @Post("/add")
+  async add(
+    @RequestBody() user: { name: string },
+    @Response() response: TResponse
+  ) {
+    console.log("RequestBody", user);
+    response.body = user;
+  }
 
   @Get("/detail/:id")
-  // @UseBefore(UserMiddleware)
+  // @UseBefore(UserAuth)
   async test2Api(
     @PathParams("id") aid: string,
     @QueryParams("userId") id: string,

@@ -7,5 +7,6 @@ export enum ParamsType {
   PATHPARAMS = "path",
   REQUEST = "request",
   RESPONSE = "response",
+  NEXT = "next",
   HEADERPARAMS = "header"
 }

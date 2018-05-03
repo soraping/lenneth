@@ -70,12 +70,12 @@ export const toAsyncMiddleware = (
   target: Object | any,
   middleware: TApiMiddleware,
   key?: string,
-  cb?: (key: string, ctx: TContext) => any[]
+  cb?: (key: string, ctx: TContext, next: TNext) => any[]
 ) => {
   return async (ctx: TContext, next: TNext) => {
     if (key) {
       // 此处一定要用call来重新设置this指向
-      return middleware.call(target, ...cb(key, ctx), ctx, next);
+      return middleware.call(target, ...cb(key, ctx, next), ctx, next);
     }
     return middleware.call(target, ctx, next);
   };

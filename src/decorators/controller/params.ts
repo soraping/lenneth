@@ -41,7 +41,7 @@ export const QueryParams = (paramsKey: string | any): ParameterDecorator => {
   };
 };
 
-export const RequestBody = (paramsKey: string | any) => {
+export const RequestBody = (paramsKey?: string | any) => {
   return (
     target: Object,
     propertyKey: string | symbol,
@@ -106,5 +106,15 @@ export const HeaderParams = (paramsKey: string | any = "") => {
       paramsKey,
       ParamsType.HEADERPARAMS
     );
+  };
+};
+
+export const Next = () => {
+  return (
+    target: Object,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    decorate(target, propertyKey, parameterIndex, "", ParamsType.NEXT);
   };
 };

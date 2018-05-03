@@ -11,10 +11,9 @@
  *  }
  */
 import { toArray } from "@utils";
-import { TMiddleware } from "@interfaces";
-export const UseBefore = (middleware: TMiddleware): Function => {
+export const UseBefore = (middClass: Function): Function => {
   return (target: any, name: string, descriptor: ParameterDecorator) => {
     target[name] = toArray(target[name]);
-    target[name].unshift(middleware);
+    target[name].unshift(middClass.prototype.use);
   };
 };

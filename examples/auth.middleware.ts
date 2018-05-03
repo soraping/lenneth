@@ -1,7 +1,10 @@
-import { Middleware } from "@decorators";
-import { IMiddleware } from "@interfaces";
+import { Middleware, HeaderParams, QueryParams, Next } from "@decorators";
+import { IMiddleware, TContext, TNext } from "@interfaces";
 
 @Middleware()
-class Auth implements IMiddleware {
-  use() {}
+export class UserAuth implements IMiddleware {
+  async use(@HeaderParams() headers: any, @Next() next: TNext) {
+    console.log("UserAuth - headers", headers);
+    await next();
+  }
 }

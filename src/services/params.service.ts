@@ -3,7 +3,7 @@
  */
 import { Service } from "@decorators";
 import { BaseService } from "./base.service";
-import { IParamsMapKey, IParamsMapValue, TContext } from "@interfaces";
+import { IParamsMapKey, IParamsMapValue, TContext, TNext } from "@interfaces";
 import { ParamsType } from "@common";
 import { getClassName } from "@utils";
 
@@ -30,7 +30,7 @@ export class ParamsService extends BaseService {
    * @param paramsMapKey
    * @param ctx
    */
-  paramsToList(paramsMapKey: string, ctx: TContext) {
+  paramsToList(paramsMapKey: string, ctx: TContext, next: TNext) {
     return ParamsService.paramsMap.get(paramsMapKey).map(item => {
       switch (item.paramsType) {
         case ParamsType.PATHPARAMS:
@@ -50,6 +50,9 @@ export class ParamsService extends BaseService {
         case ParamsType.RESPONSE:
           // response
           return ctx.response;
+        case ParamsType.NEXT:
+          // next
+          return next;
         case ParamsType.HEADERPARAMS:
           // header
           return item.paramsKey
