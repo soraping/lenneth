@@ -5,13 +5,14 @@ import {
   PathParams,
   HeaderParams,
   RequestBody,
+  Description,
   Get,
   Post,
   UseBefore,
   Request,
   Response,
   Autowired,
-  TContext,
+  IContext,
   TRequest,
   TResponse
 } from "@lenneth";
@@ -24,6 +25,7 @@ export class UserController {
   @Autowired() private userService: UserService;
 
   @Post("/add")
+  @Description("添加用户")
   async add(
     @RequestBody() user: { name: string },
     @Response() response: TResponse
@@ -34,6 +36,7 @@ export class UserController {
 
   @Get("/detail/:id")
   // @UseBefore(UserAuth)
+  @Description("获取用户信息")
   async test2Api(
     @PathParams("id") aid: string,
     @QueryParams("userId") id: string,

@@ -11,6 +11,7 @@
     "experimentalDecorators": true,
     "removeComments": true,
     "importHelpers": true,
+    "declaration": true,
     "rootDir": "./",
     "outDir": "./build",
     "baseUrl": ".",

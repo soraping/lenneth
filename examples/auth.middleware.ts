@@ -1,5 +1,5 @@
 import { Middleware, HeaderParams, QueryParams, Next } from "@decorators";
-import { IMiddleware, TContext, TNext } from "@interfaces";
+import { IMiddleware, TNext } from "@interfaces";
 
 @Middleware()
 export class UserAuth implements IMiddleware {

@@ -3,7 +3,7 @@ import { IBaseInterface } from "./IBase.interface";
 
 export type IInterceptor = Koa.Middleware;
 
-export type TContext = Koa.Context;
+export interface IContext extends Koa.Context {}
 
 export type TMiddleware = Koa.Middleware;
 

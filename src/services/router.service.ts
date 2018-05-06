@@ -5,7 +5,7 @@ import * as path from "path";
 import * as Koa from "koa";
 import * as Router from "koa-router";
 import { Autowired } from "@decorators";
-import { PathParamsType, IRouterParams } from "@interfaces";
+import { PathParamsType, IRouterParams, TApiMiddleware } from "@interfaces";
 import { LENNETH_CONTROLLER_PATH } from "@constants";
 import { Metadata } from "@common";
 import { ParamsService } from "./params.service";
@@ -32,8 +32,13 @@ export class RouterService {
    */
   static DecoratedRouters: Map<
     { target: any; method: string; path: PathParamsType },
-    TRouterMiddleware | Array<TRouterMiddleware>
+    TApiMiddleware | Array<TApiMiddleware>
   > = new Map();
+
+  /**
+   * 接口描述映射表
+   */
+  static DescriptionMap: Map<string, string>;
 
   /**
    * 载入路由
@@ -41,10 +46,10 @@ export class RouterService {
   loadRouter(app: Koa) {
     for (let [config, controllers] of RouterService.DecoratedRouters) {
       if (!isArray(controllers)) {
-        controllers = toArray(<TRouterMiddleware>controllers);
+        controllers = toArray(<TApiMiddleware>controllers);
       }
       // 重置数组内中间件方法
-      controllers = (controllers as TRouterMiddleware[]).map(item => {
+      controllers = (controllers as TApiMiddleware[]).map(item => {
         // 整理参数
         let paramsMapKey = ParamsService.fomartParamsMapKey(
           config.target,

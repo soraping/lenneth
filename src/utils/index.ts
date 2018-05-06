@@ -1,5 +1,6 @@
+import * as Koa from "koa";
 import { Metadata } from "@common";
-import { TApiMiddleware, TContext, TNext } from "@interfaces";
+import { TApiMiddleware, IContext, TNext } from "@interfaces";
 
 /**
  *  获取类
@@ -60,6 +61,18 @@ export const toArray = (target: any): any[] => {
 };
 
 /**
+ * 接口描述映射表key
+ * @param target
+ * @param propertyKey
+ */
+export const apiDescriptionMapKey = (
+  target: object | any,
+  propertyKey: any
+) => {
+  return `${getClassName(target)}_${propertyKey}`;
+};
+
+/**
  * 在每个方法的最外层封装一个原装的中间件，
  * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
  * @param target 关系this指向
@@ -70,9 +83,9 @@ export const toAsyncMiddleware = (
   target: Object | any,
   middleware: TApiMiddleware,
   key?: string,
-  cb?: (key: string, ctx: TContext, next: TNext) => any[]
+  cb?: (key: string, ctx: IContext, next: TNext) => any[]
 ) => {
-  return async (ctx: TContext, next: TNext) => {
+  return async (ctx: IContext, next: TNext) => {
     if (key) {
       // 此处一定要用call来重新设置this指向
       return middleware.call(target, ...cb(key, ctx, next), ctx, next);
