@@ -38,7 +38,7 @@ export class RouterService {
   /**
    * 接口描述映射表
    */
-  static DescriptionMap: Map<string, string>;
+  static DescriptionMap: Map<string, string> = new Map();
 
   /**
    * 载入路由

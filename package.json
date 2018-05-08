@@ -17,7 +17,8 @@
     "koa-bodyparser": "^4.2.0",
     "koa-logger": "^3.2.0",
     "koa-router": "^7.4.0",
-    "reflect-metadata": "^0.1.12"
+    "reflect-metadata": "^0.1.12",
+    "ts-log-debug": "^4.0.3"
   },
   "devDependencies": {
     "@types/cli-color": "^0.3.29",

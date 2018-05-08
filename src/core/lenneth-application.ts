@@ -3,7 +3,7 @@ import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import { ILennthApplication } from "@interfaces";
 import { getClass } from "@utils";
-import { RouterService } from "@services";
+import { RouterService, LoggerService } from "@services";
 import { Autowired } from "@decorators";
 import { LennethSetting } from "./lenneth-setting";
 
@@ -16,6 +16,8 @@ export abstract class LennethApplication implements ILennthApplication {
   @Autowired() private lennethSetting: LennethSetting;
   // 路由服务
   @Autowired() private routerService: RouterService;
+  // 日志
+  @Autowired() private logger: LoggerService;
 
   constructor() {
     // 获取设置的service参数
@@ -23,6 +25,7 @@ export abstract class LennethApplication implements ILennthApplication {
     if (_settingParams) {
       this._setSettings(_settingParams);
     }
+    this.logger.use().info("hahahaha");
   }
 
   /**
