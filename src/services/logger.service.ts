@@ -30,13 +30,17 @@ export class LoggerService implements ILoggerService {
     this._loggerName = loggerName;
   }
 
-  info(msg: any) {}
+  info(msg: any) {
+    this.use().info(msg);
+  }
 
-  debug() {}
+  debug(msg: any) {
+    this.use().debug(msg);
+  }
 
-  log() {}
-
-  error() {}
+  error(msg: any) {
+    this.use().error(msg);
+  }
 
   use(): Logger {
     const logger = new Logger(this._loggerName);
