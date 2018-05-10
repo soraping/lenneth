@@ -73,18 +73,6 @@ export const apiDescriptionMapKey = (
 };
 
 /**
- * 处理日志格式
- * @param logData
- * @param args
- */
-export const formatLogData = (logData: any | any[], ...args: any[]) => {
-  let data = logData;
-  if (!isArray(data)) {
-    data = [data, ...args];
-  }
-};
-
-/**
  * 在每个方法的最外层封装一个原装的中间件，
  * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
  * @param target 关系this指向

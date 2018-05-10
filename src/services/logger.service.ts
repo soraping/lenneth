@@ -1,7 +1,25 @@
-import { Logger, BaseLayout, LogEvent, Layout } from "ts-log-debug";
-import { formatLogData } from "@utils";
+import {
+  Logger,
+  BaseLayout,
+  LogEvent,
+  Layout,
+  Appender,
+  BaseAppender
+} from "ts-log-debug";
 import { ILoggerService, ILogTableSettings } from "@interfaces";
 import { BaseService } from "./base.service";
+
+const consoleLog = console.log.bind(console);
+
+/**
+ * 重置输出源
+ */
+@Appender({ name: "LennethConsoleAppender" })
+class LennethConsoleAppender extends BaseAppender {
+  write(loggingEvent: LogEvent) {
+    consoleLog(this.layout(loggingEvent, this.config.timezoneOffset));
+  }
+}
 
 /**
  * 自定义日志模版
@@ -16,9 +34,6 @@ class JsonLayout extends BaseLayout {
       data: loggingEvent.data,
       context: loggingEvent.context
     };
-
-    log.data = log.data.map(data => formatLogData([data]));
-
     return JSON.stringify(log);
   }
 }
@@ -38,6 +53,10 @@ export class LoggerService implements ILoggerService {
     this.use().debug(msg);
   }
 
+  warn(msg: any) {
+    this.use().warn(msg);
+  }
+
   error(msg: any) {
     this.use().error(msg);
   }
@@ -48,10 +67,20 @@ export class LoggerService implements ILoggerService {
 
   private use(): Logger {
     const logger = new Logger(this._loggerName);
-    logger.appenders.set("std-log", {
-      type: "console",
-      level: ["debug", "info", "trace"]
-    });
+    logger.appenders
+      .set("std-log", {
+        type: "LennethConsoleAppender",
+        level: ["debug", "info", "trace"]
+      })
+      .set("file-log", {
+        type: "file",
+        filename: "lenneth-error.log",
+        maxLogSize: 10485760,
+        backups: 3,
+        compress: true,
+        levels: ["fatal", "error", "warn"],
+        layout: { type: "customJson" }
+      });
     return logger;
   }
 }

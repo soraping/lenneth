@@ -11,5 +11,6 @@ export interface ILoggerService extends IBaseInterface {
   info(msg: any): void;
   debug(msg: any): void;
   error(msg: any): void;
+  warn(msg: any): void;
   drawTable(list: any[], ILogTableSettings): string;
 }
