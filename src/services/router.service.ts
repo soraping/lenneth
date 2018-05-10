@@ -5,16 +5,18 @@ import * as path from "path";
 import * as Koa from "koa";
 import * as Router from "koa-router";
 import { Autowired } from "@decorators";
-import { PathParamsType, IRouterParams, TApiMiddleware } from "@interfaces";
+import { IRouterPathConfig, IRouterParams, TApiMiddleware } from "@interfaces";
 import { LENNETH_CONTROLLER_PATH } from "@constants";
 import { Metadata } from "@common";
 import { ParamsService } from "./params.service";
+import { LoggerService } from "./logger.service";
 import {
   getClass,
   isArray,
   toArray,
   getClassName,
-  toAsyncMiddleware
+  toAsyncMiddleware,
+  apiDescriptionMapKey
 } from "@utils";
 
 type TRouterMiddleware = Router.IMiddleware;
@@ -26,12 +28,14 @@ export class RouterService {
   // 类方法参数服务
   @Autowired() private paramsService: ParamsService;
 
+  @Autowired() private loggerService: LoggerService;
+
   constructor() {}
   /**
    * 路由配置信息
    */
   static DecoratedRouters: Map<
-    { target: any; method: string; path: PathParamsType },
+    IRouterPathConfig,
     TApiMiddleware | Array<TApiMiddleware>
   > = new Map();
 
@@ -44,6 +48,7 @@ export class RouterService {
    * 载入路由
    */
   loadRouter(app: Koa) {
+    let controllerList = [];
     for (let [config, controllers] of RouterService.DecoratedRouters) {
       if (!isArray(controllers)) {
         controllers = toArray(<TApiMiddleware>controllers);
@@ -75,9 +80,29 @@ export class RouterService {
         routerPath,
         ...(<TRouterMiddleware[]>controllers)
       );
+      // 接口列表 print
+      controllerList.push({
+        method: config.method,
+        url: routerPath,
+        name: `${getClassName(config.target)}.${config.name}`,
+        description: RouterService.DescriptionMap.get(
+          apiDescriptionMapKey(config.target, config.name)
+        )
+      });
     }
     app.use(this.router.routes());
     app.use(this.router.allowedMethods());
+    // 日志
+    let logstr = this.loggerService.drawTable(controllerList, {
+      padding: 1,
+      header: {
+        method: "method",
+        url: "Endpoint",
+        name: "Class method",
+        description: "description"
+      }
+    });
+    this.loggerService.info("\n" + logstr.trim());
   }
 
   /**

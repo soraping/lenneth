@@ -17,6 +17,7 @@ export const Router = (params: IRouterParams): Function => {
     RouterService.DecoratedRouters.set(
       {
         target,
+        name,
         ...params
       },
       target[name]

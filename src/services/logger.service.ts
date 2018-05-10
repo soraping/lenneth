@@ -1,6 +1,6 @@
 import { Logger, BaseLayout, LogEvent, Layout } from "ts-log-debug";
 import { formatLogData } from "@utils";
-import { ILoggerService } from "@interfaces";
+import { ILoggerService, ILogTableSettings } from "@interfaces";
 import { BaseService } from "./base.service";
 
 /**
@@ -42,7 +42,11 @@ export class LoggerService implements ILoggerService {
     this.use().error(msg);
   }
 
-  use(): Logger {
+  drawTable(list: any[], setting: ILogTableSettings): string {
+    return this.use().drawTable(list, setting);
+  }
+
+  private use(): Logger {
     const logger = new Logger(this._loggerName);
     logger.appenders.set("std-log", {
       type: "console",

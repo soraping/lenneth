@@ -25,7 +25,6 @@ export abstract class LennethApplication implements ILennthApplication {
     if (_settingParams) {
       this._setSettings(_settingParams);
     }
-    this.logger.use().info("hahahaha");
   }
 
   /**
