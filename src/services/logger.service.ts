@@ -1,3 +1,6 @@
+/**
+ * 日志模块重新封装
+ */
 import {
   Logger,
   BaseLayout,

@@ -2,7 +2,9 @@ import {
   LennethApplication,
   ServerSettings,
   ILenneth,
-  IInterceptor
+  IInterceptor,
+  LennethLogger,
+  Autowired
 } from "@lenneth";
 import { UserController } from "./user.controller";
 import * as logger from "koa-logger";
@@ -13,28 +15,30 @@ import * as logger from "koa-logger";
   port: "8082"
 })
 export class Lenneth extends LennethApplication implements ILenneth {
+  @Autowired("lenneth-app") logger: LennethLogger;
+
   // 初始化
   $onInit(): Promise<any> {
-    console.log("start $onInit");
+    this.logger.info("start $onInit");
     return new Promise((res, err) => {
       res();
     });
   }
   // 加载中间件
   $onMountingMiddlewares() {
-    console.log("start $onMountingMiddlewares");
+    this.logger.info("start $onMountingMiddlewares");
     this.use(logger());
   }
   // 拦截器
   $interceptor(): IInterceptor {
-    console.log("start interceptor");
+    this.logger.info("start interceptor");
     return async (ctx, next) => {
-      console.log(ctx.method);
+      this.logger.info(ctx.method);
       await next();
     };
   }
   //
   $onReady() {
-    console.log("lenneth server ready");
+    this.logger.info("lenneth server ready");
   }
 }

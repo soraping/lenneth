@@ -49,6 +49,7 @@ export class RouterService {
    */
   loadRouter(app: Koa) {
     let controllerList = [];
+    let descriptionsMap = RouterService.DescriptionMap;
     for (let [config, controllers] of RouterService.DecoratedRouters) {
       if (!isArray(controllers)) {
         controllers = toArray(<TApiMiddleware>controllers);
@@ -85,7 +86,7 @@ export class RouterService {
         method: config.method,
         url: routerPath,
         name: `${getClassName(config.target)}.${config.name}`,
-        description: RouterService.DescriptionMap.get(
+        description: descriptionsMap.get(
           apiDescriptionMapKey(config.target, config.name)
         )
       });
@@ -96,10 +97,10 @@ export class RouterService {
     let logstr = this.loggerService.drawTable(controllerList, {
       padding: 1,
       header: {
-        method: "method",
+        method: "Method",
         url: "Endpoint",
         name: "Class method",
-        description: "description"
+        description: "Description"
       }
     });
     this.loggerService.info("\n" + logstr.trim());
