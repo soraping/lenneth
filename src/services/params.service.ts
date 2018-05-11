@@ -31,6 +31,8 @@ export class ParamsService extends BaseService {
    * @param ctx
    */
   paramsToList(paramsMapKey: string, ctx: IContext, next: TNext) {
+    // 不存在key值时直接返回一个空数组
+    if (!ParamsService.paramsMap.has(paramsMapKey)) return [];
     return ParamsService.paramsMap.get(paramsMapKey).map(item => {
       switch (item.paramsType) {
         case ParamsType.PATHPARAMS:

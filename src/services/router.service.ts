@@ -86,9 +86,10 @@ export class RouterService {
         method: config.method,
         url: routerPath,
         name: `${getClassName(config.target)}.${config.name}`,
-        description: descriptionsMap.get(
-          apiDescriptionMapKey(config.target, config.name)
-        )
+        description:
+          descriptionsMap.get(
+            apiDescriptionMapKey(config.target, config.name)
+          ) || ""
       });
     }
     app.use(this.router.routes());

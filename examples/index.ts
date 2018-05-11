@@ -37,7 +37,7 @@ export class Lenneth extends LennethApplication implements ILenneth {
       await next();
     };
   }
-  //
+
   $onReady() {
     this.logger.info("lenneth server ready");
   }

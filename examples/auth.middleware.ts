@@ -1,4 +1,4 @@
-import { Middleware, HeaderParams, QueryParams, Next } from "@decorators";
+import { Middleware, HeaderParams, Next } from "@decorators";
 import { IMiddleware, TNext } from "@interfaces";
 
 @Middleware()

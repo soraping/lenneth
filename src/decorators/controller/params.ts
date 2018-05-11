@@ -25,7 +25,7 @@ const decorate = (
   ParamsService.paramsMap.set(paramsMapKey, paramsValueList);
 };
 
-export const QueryParams = (paramsKey: string | any): ParameterDecorator => {
+export const RequestParam = (paramsKey: string | any): ParameterDecorator => {
   return (
     target: Object,
     propertyKey: string | symbol,
@@ -57,7 +57,7 @@ export const RequestBody = (paramsKey?: string | any) => {
   };
 };
 
-export const PathParams = (paramsKey: string | any) => {
+export const PathVariable = (paramsKey: string | any) => {
   return (
     target: Object,
     propertyKey: string | symbol,
