@@ -1,4 +1,4 @@
 export * from "./core";
 export * from "./decorators";
 export * from "./interfaces";
-export { LoggerService as LennethLogger } from "./services/logger.service";
+export { LoggerService as Logger } from "./services/logger.service";

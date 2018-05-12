@@ -2,8 +2,10 @@ import * as path from "path";
 import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import { ILennthApplication } from "@interfaces";
-import { getClass } from "@utils";
-import { RouterService } from "@services";
+import { Metadata } from "@common";
+import { LENNETH_INTERCEPTOR_NAME } from "@constants";
+import { getClass, toAsyncMiddleware } from "@utils";
+import { RouterService, ParamsService } from "@services";
 import { Autowired } from "@decorators";
 import { LennethSetting } from "./lenneth-setting";
 
@@ -16,6 +18,8 @@ export abstract class LennethApplication implements ILennthApplication {
   @Autowired() private lennethSetting: LennethSetting;
   // 路由服务
   @Autowired() private routerService: RouterService;
+  // 参数设置
+  @Autowired() private paramsService: ParamsService;
 
   constructor() {
     // 获取设置的service参数
@@ -49,15 +53,19 @@ export abstract class LennethApplication implements ILennthApplication {
 
   /**
    * 加载拦截器
-   * 拦截器要在其他中间件前加载
-   * 1. hook函数中添加拦截器
-   * 2. 修饰器 @Interceptor
-   * 两者都有时给出警告提示，并只执行@Interceptor修饰器的方法
    */
   private async _loadInterceptor() {
-    const self = this;
-    if ("$interceptor" in self) {
-      this.use(self["$interceptor"]());
+    // 读取拦截器类
+    let Interceptor = LennethSetting.serverSettingMap.get("interceptor");
+    if (Interceptor) {
+      let interceptorFun = new Interceptor().use;
+      let asyncMiddle = toAsyncMiddleware(
+        LennethApplication,
+        interceptorFun,
+        interceptorFun[LENNETH_INTERCEPTOR_NAME],
+        this.paramsService.paramsToList
+      );
+      this.app.use(asyncMiddle);
     }
   }
 

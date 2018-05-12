@@ -6,3 +6,4 @@ export * from "./decorators";
 export * from "./Type";
 export * from "./IMiddleware";
 export * from "./ILoggerService";
+export * from "./IInterceptor";
