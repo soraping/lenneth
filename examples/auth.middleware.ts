@@ -8,3 +8,11 @@ export class UserAuth implements IMiddleware {
     await next();
   }
 }
+
+@Middleware()
+export class GoodsAuth implements IMiddleware {
+  async use(@HeaderParams("user-agent") ua: string, @Next() next: TNext) {
+    console.log("user-agent", ua);
+    await next();
+  }
+}

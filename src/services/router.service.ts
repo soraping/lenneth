@@ -56,10 +56,15 @@ export class RouterService {
       }
       // 重置数组内中间件方法
       controllers = (controllers as TApiMiddleware[]).map(item => {
+        // 获取paramsMapKey参数
+        let controllerName =
+          item.name != "use"
+            ? item.name
+            : `${config.name}_${item["middlewarName"]}`;
         // 整理参数
         let paramsMapKey = ParamsService.fomartParamsMapKey(
           config.target,
-          item.name
+          controllerName
         );
         // 转换方法
         return toAsyncMiddleware(

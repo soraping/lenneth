@@ -18,7 +18,7 @@ import {
 } from "@lenneth";
 
 import { UserService } from "./user.service";
-import { UserAuth } from "./auth.middleware";
+import { UserAuth, GoodsAuth } from "./auth.middleware";
 
 @Controller("/user")
 export class UserController {
@@ -35,7 +35,7 @@ export class UserController {
   // }
 
   @Get("/detail/:id")
-  @UseBefore(UserAuth)
+  @UseBefore(UserAuth, GoodsAuth)
   // @Description("获取用户信息")
   async test2Api() // @PathVariable("id") aid: string,
   // @RequestParam("userId") id: string,
