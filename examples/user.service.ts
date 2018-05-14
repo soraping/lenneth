@@ -1,7 +1,11 @@
 export class UserService {
   getUserInfo() {
-    return {
-      name: "haha"
+    throw {
+      status: 500,
+      message: "hahahah"
     };
+    // return {
+    //   name: "haha"
+    // };
   }
 }

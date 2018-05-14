@@ -6,7 +6,6 @@ import { Interceptor, IInterceptor, HeaderParams, Next, TNext } from "@lenneth";
 @Interceptor()
 export class InterceptorClass implements IInterceptor {
   async use(@HeaderParams() headers: any, @Next() next: TNext) {
-    console.log("Interceptor", headers);
     await next();
   }
 }

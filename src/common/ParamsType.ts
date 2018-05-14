@@ -8,5 +8,6 @@ export enum ParamsType {
   REQUEST = "request",
   RESPONSE = "response",
   NEXT = "next",
-  HEADERPARAMS = "header"
+  HEADERPARAMS = "header",
+  ERROR = "error"
 }

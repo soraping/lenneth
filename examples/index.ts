@@ -8,11 +8,13 @@ import {
 import * as logger from "koa-logger";
 import { UserController } from "./user.controller";
 import { InterceptorClass } from "./interceptor";
+import { GlobalError } from "./error";
 @ServerSettings({
   imports: {
     "/apis": [UserController]
   },
   interceptor: InterceptorClass,
+  error: GlobalError,
   port: "8082"
 })
 export class Lenneth extends LennethApplication implements ILenneth {
@@ -28,7 +30,7 @@ export class Lenneth extends LennethApplication implements ILenneth {
   // 加载中间件
   $onMountingMiddlewares() {
     this.logger.info("start $onMountingMiddlewares");
-    this.use(logger());
+    // this.use(logger());
   }
 
   $onReady() {

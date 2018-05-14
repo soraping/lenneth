@@ -65,4 +65,24 @@ export class ParamsService extends BaseService {
       }
     });
   }
+
+  /**
+   * 错误中间件参数处理
+   * @param paramsMapKey
+   * @param err
+   * @param ctx
+   */
+  paramsToErrorList(paramsMapKey: string, err: Error, ctx: IContext): any[] {
+    if (!ParamsService.paramsMap.has(paramsMapKey)) return [];
+    return ParamsService.paramsMap.get(paramsMapKey).map(item => {
+      switch (item.paramsType) {
+        case ParamsType.ERROR:
+          return err;
+        case ParamsType.RESPONSE:
+          return ctx.response;
+        default:
+          break;
+      }
+    });
+  }
 }

@@ -118,3 +118,13 @@ export const Next = () => {
     decorate(target, propertyKey, parameterIndex, "", ParamsType.NEXT);
   };
 };
+
+export const Err = () => {
+  return (
+    target: object | any,
+    propertyKey: string | symbol,
+    parameterIndex: number
+  ) => {
+    decorate(target, propertyKey, parameterIndex, "", ParamsType.ERROR);
+  };
+};

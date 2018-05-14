@@ -43,16 +43,16 @@ export class UserController {
     @RequestParam("userName") name: string,
     @HeaderParams() header: any,
     @Request() request: TRequest,
-    @Response() response: TResponse
+    @Response() response: TResponse,
+    ctx: IContext
   ) {
-    console.log("test2Api");
-    console.log("pathid", aid);
-    console.log("userId", id);
-    console.log("userName", name);
-    console.log("HeaderParams", header);
-    console.log("request", request);
-    console.log("response", response);
-
+    // console.log("test2Api");
+    // console.log("pathid", aid);
+    // console.log("userId", id);
+    // console.log("userName", name);
+    // console.log("HeaderParams", header);
+    // console.log("request", request);
+    // console.log("response", response);
     response.body = this.userService.getUserInfo();
   }
 }

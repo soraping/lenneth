@@ -3,8 +3,8 @@ import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import { ILennthApplication } from "@interfaces";
 import { Metadata } from "@common";
-import { LENNETH_INTERCEPTOR_NAME } from "@constants";
-import { getClass, toAsyncMiddleware } from "@utils";
+import { LENNETH_INTERCEPTOR_NAME, LENNETH_ERROR_NAME } from "@constants";
+import { getClass, toAsyncMiddleware, toErrorAsyncMiddleware } from "@utils";
 import { RouterService, ParamsService } from "@services";
 import { Autowired } from "@decorators";
 import { LennethSetting } from "./lenneth-setting";
@@ -60,7 +60,7 @@ export abstract class LennethApplication implements ILennthApplication {
     if (Interceptor) {
       let interceptorFun = new Interceptor().use;
       let asyncMiddle = toAsyncMiddleware(
-        LennethApplication,
+        Interceptor,
         interceptorFun,
         interceptorFun[LENNETH_INTERCEPTOR_NAME],
         this.paramsService.paramsToList
@@ -91,6 +91,23 @@ export abstract class LennethApplication implements ILennthApplication {
       this.routerService.loadRouter(this.app);
       res();
     });
+  }
+
+  /**
+   * 错误处理中间件
+   */
+  private async _errorMiddleware(): Promise<any> {
+    let errorMiddlewar = LennethSetting.serverSettingMap.get("error");
+    if (errorMiddlewar) {
+      let errorMiddlewarFun = new errorMiddlewar().use;
+      let asyncMiddle = toErrorAsyncMiddleware(
+        errorMiddlewar,
+        errorMiddlewarFun,
+        errorMiddlewarFun[LENNETH_ERROR_NAME],
+        this.paramsService.paramsToErrorList
+      );
+      this.app.on("error", asyncMiddle);
+    }
   }
 
   /**
@@ -127,8 +144,14 @@ export abstract class LennethApplication implements ILennthApplication {
       await this._callHook("$onMountingMiddlewares", undefined, this.app);
       // 载入bodyParser
       await this._loadBodyParser();
+      // 路由载入前
+      await this._callHook("$onRoutesInit", undefined, this.app);
       // 载入路由
       await this._loadRouters();
+      // 路由载入之后
+      await this._callHook("$afterRoutesInit", undefined, this.app);
+      // error处理中间件
+      await this._errorMiddleware();
       // 启动服务
       await this._startServer();
       // 启动服务完成

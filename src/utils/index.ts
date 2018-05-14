@@ -72,6 +72,10 @@ export const apiDescriptionMapKey = (
   return `${getClassName(target)}_${propertyKey}`;
 };
 
+export const createParamsMapKey = (target: object | any, propertyKey: any) => {
+  return `${getClassName(target)}_${propertyKey}`;
+};
+
 /**
  * 在每个方法的最外层封装一个原装的中间件，
  * 这样就能够在各自的方法体内获得属性修饰器，不受原来koa中间件的影响
@@ -91,5 +95,23 @@ export const toAsyncMiddleware = (
       return middleware.call(target, ...cb(key, ctx, next), ctx, next);
     }
     return middleware.call(target, ctx, next);
+  };
+};
+
+/**
+ * 错误中间件处理
+ * @param target
+ * @param middleware
+ * @param key
+ * @param cb
+ */
+export const toErrorAsyncMiddleware = (
+  target: Object | any,
+  middleware: TApiMiddleware,
+  key?: string,
+  cb?: (key: string, err: Error, ctx: IContext) => any[]
+) => {
+  return (err: Error, ctx: IContext) => {
+    return middleware.call(target, ...cb(key, err, ctx), err, ctx);
   };
 };

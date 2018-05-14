@@ -20,6 +20,7 @@ export class LennethSetting implements IServerSettings {
   @Value({ "/debug": DebugController })
   imports: TImports;
   interceptor: Function;
+  error: Function;
 
   /**
    * {

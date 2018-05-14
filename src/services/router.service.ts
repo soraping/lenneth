@@ -6,7 +6,7 @@ import * as Koa from "koa";
 import * as Router from "koa-router";
 import { Autowired } from "@decorators";
 import { IRouterPathConfig, IRouterParams, TApiMiddleware } from "@interfaces";
-import { LENNETH_CONTROLLER_PATH } from "@constants";
+import { LENNETH_CONTROLLER_PATH, LENNETH_MIDDLEWARE_NAME } from "@constants";
 import { Metadata } from "@common";
 import { ParamsService } from "./params.service";
 import { LoggerService } from "./logger.service";
@@ -57,10 +57,11 @@ export class RouterService {
       // 重置数组内中间件方法
       controllers = (controllers as TApiMiddleware[]).map(item => {
         // 获取paramsMapKey参数
+        // usebefore 特殊处理
         let controllerName =
           item.name != "use"
             ? item.name
-            : `${config.name}_${item["middlewarName"]}`;
+            : `${config.name}_${item[LENNETH_MIDDLEWARE_NAME]}`;
         // 整理参数
         let paramsMapKey = ParamsService.fomartParamsMapKey(
           config.target,

@@ -1,12 +1,11 @@
 /**
  * 拦截器
  */
-import { Metadata } from "@common";
 import { LENNETH_INTERCEPTOR_NAME } from "@constants";
-import { ParamsService } from "@services";
+import { createParamsMapKey } from "@utils";
 export const Interceptor = () => {
   return (target: object | any) => {
-    let paramsMapKey = ParamsService.fomartParamsMapKey(target, "use");
+    let paramsMapKey = createParamsMapKey(target, "use");
     target.prototype.use[LENNETH_INTERCEPTOR_NAME] = paramsMapKey;
   };
 };
