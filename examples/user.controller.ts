@@ -53,6 +53,7 @@ export class UserController {
     // console.log("HeaderParams", header);
     // console.log("request", request);
     // console.log("response", response);
-    response.body = this.userService.getUserInfo();
+    // response.body = this.userService.getUserInfo();
+    ctx.throw(400, "haha", { errorData: { user: "zhangsan" } });
   }
 }

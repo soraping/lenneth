@@ -14,17 +14,12 @@ import { LoggerService } from "@services";
 @ErrorMiddlewar()
 export class LennethGlobalError implements IErrorMiddlewar {
   @Autowired("lenneth-global-error") logger: LoggerService;
-  async use(@Err() error: any, @Response() response: TResponse): Promise<any> {
-    // 默认500
+  async use(@Err() error: any, @Response() response: TResponse, ctx: IContext) {
     this.logger.error(error);
-    let status = HttpStatus.INTERNAL_SERVER_ERROR;
-    if (typeof error == "string") {
-      return (response.body = { message: error, status });
-    }
-    return (response.body = {
-      status: error.status,
-      message: error.message,
-      data: error.data
-    });
+    // ctx.body = {
+    //   status: error.status,
+    //   message: error.message,
+    //   data: error.data
+    // };
   }
 }

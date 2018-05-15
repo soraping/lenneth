@@ -4,7 +4,7 @@
 import { Service } from "@decorators";
 import { BaseService } from "./base.service";
 import { IParamsMapKey, IParamsMapValue, IContext, TNext } from "@interfaces";
-import { ParamsType } from "@common";
+import { ParamsType, HttpStatus } from "@common";
 import { getClassName, isJsonString } from "@utils";
 
 // @Service()
@@ -78,8 +78,11 @@ export class ParamsService extends BaseService {
       switch (item.paramsType) {
         case ParamsType.ERROR:
           // 异常字符处理
-          let errStr = err.message.split("non-error thrown: ")[1];
-          return isJsonString(errStr) ? JSON.parse(errStr) : errStr;
+          return {
+            message: err.message,
+            status: err["status"] || HttpStatus.INTERNAL_SERVER_ERROR,
+            data: err["errorData"]
+          };
         case ParamsType.RESPONSE:
           return ctx.response;
         default:
