@@ -60,7 +60,8 @@ export abstract class LennethApplication implements ILennthApplication {
     if (Interceptor) {
       let interceptorFun = new Interceptor().use;
       let asyncMiddle = toAsyncMiddleware(
-        Interceptor,
+        // 实例指向的是类的原型对象，所以此处不是类的本身，而是类的原型
+        Interceptor.prototype,
         interceptorFun,
         interceptorFun[LENNETH_INTERCEPTOR_NAME],
         this.paramsService.paramsToList
@@ -101,7 +102,8 @@ export abstract class LennethApplication implements ILennthApplication {
     if (errorMiddlewar) {
       let errorMiddlewarFun = new errorMiddlewar().use;
       let asyncMiddle = toErrorAsyncMiddleware(
-        errorMiddlewar,
+        // 这里this指向的是类的原型
+        errorMiddlewar.prototype,
         errorMiddlewarFun,
         errorMiddlewarFun[LENNETH_ERROR_NAME],
         this.paramsService.paramsToErrorList

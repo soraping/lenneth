@@ -6,6 +6,7 @@ import { Env, Metadata } from "@common";
 import { SERVER_SETTINGS } from "@constants";
 import { Value } from "@decorators";
 import { DebugController } from "./debug.controller";
+import { LennethGlobalError } from "./lenneth-error";
 
 // 根目录
 const rootDir = process.cwd();
@@ -13,14 +14,32 @@ const rootDir = process.cwd();
 const env = (process.env.NODE_ENV as Env) || Env.DEV;
 
 export class LennethSetting implements IServerSettings {
+  /**
+   * 根目录
+   */
   @Value(rootDir) rootDir: string;
+  /**
+   * 端口号
+   */
   @Value(8080)
   port: string | number;
+  /**
+   * 环境变量
+   */
   @Value(env) env: string;
+  /**
+   * API
+   */
   @Value({ "/debug": DebugController })
   imports: TImports;
+  /**
+   * 错误处理
+   */
+  @Value(LennethGlobalError) error: Function;
+  /**
+   * 拦截器
+   */
   interceptor: Function;
-  error: Function;
 
   /**
    * {
@@ -53,6 +72,7 @@ export class LennethSetting implements IServerSettings {
         rootDir: this.rootDir,
         port: this.port,
         env: this.env,
+        error: this.error,
         ...propertyKey
       };
       // imports 特殊处理

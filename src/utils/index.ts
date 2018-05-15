@@ -61,6 +61,19 @@ export const toArray = (target: any): any[] => {
 };
 
 /**
+ * 是否json串
+ * @param str
+ */
+export const isJsonString = (str: string) => {
+  try {
+    if (typeof JSON.parse(str) == "object") {
+      return true;
+    }
+  } catch (e) {}
+  return false;
+};
+
+/**
  * 接口描述映射表key
  * @param target
  * @param propertyKey
@@ -112,6 +125,6 @@ export const toErrorAsyncMiddleware = (
   cb?: (key: string, err: Error, ctx: IContext) => any[]
 ) => {
   return (err: Error, ctx: IContext) => {
-    return middleware.call(target, ...cb(key, err, ctx), err, ctx);
+    return middleware.call(target, ...cb(key, err, ctx), ctx);
   };
 };

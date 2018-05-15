@@ -14,7 +14,7 @@ import { GlobalError } from "./error";
     "/apis": [UserController]
   },
   interceptor: InterceptorClass,
-  error: GlobalError,
+  // error: GlobalError,
   port: "8082"
 })
 export class Lenneth extends LennethApplication implements ILenneth {
