@@ -1,12 +1,14 @@
 {
   "name": "lenneth",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Node Web Framework on top of Koa",
   "main": "build/index.js",
   "scripts": {
     "clean": "rm -rf lib",
+    "clean-src": "rm -rf lib/src",
     "ws-publish": "npx ws-ts build .",
-    "build": "yarn clean && yarn ws-publish && npx gulp",
+    "build":
+      "yarn clean && yarn ws-publish && npx gulp copy && yarn clean-src && npx gulp relative",
     "deploy": "npm publish ./lib"
   },
   "dependencies": {
@@ -30,6 +32,7 @@
     "sinon": "^4.4.5",
     "sinon-chai": "^3.0.0",
     "typescript": "^2.8.1",
+    "vinyl-paths": "^2.1.0",
     "ws-ts": "^1.1.4"
   },
   "engines": {
