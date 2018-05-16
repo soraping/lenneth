@@ -11,7 +11,8 @@
       "program": "${workspaceRoot}/build/index.js",
       "cwd": "${workspaceRoot}",
       "outFiles": ["${workspaceRoot}/build/**/*.js"],
-      "runtimeExecutable": "/Users/soraping/.nvm/versions/node/v8.9.4/bin/node",
+      "runtimeExecutable":
+        "/Users/soraping/.nvm/versions/node/v8.11.1/bin/node",
       "env": { "NODE_ENV": "development" },
       "sourceMaps": true
     }

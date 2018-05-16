@@ -83,8 +83,6 @@ export class ParamsService extends BaseService {
             status: err["status"] || HttpStatus.INTERNAL_SERVER_ERROR,
             data: err["errorData"]
           };
-        case ParamsType.RESPONSE:
-          return ctx.response;
         default:
           break;
       }

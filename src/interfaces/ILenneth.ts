@@ -15,6 +15,12 @@ export type TNext = () => Promise<any>;
 
 export type TPromise = () => Promise<any>;
 
+export interface IErrorResponse {
+  message?: string;
+  code?: string;
+  name?: string;
+}
+
 export interface ILenneth extends IBaseInterface {
   // hook
   // 初始化

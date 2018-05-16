@@ -1,4 +1,4 @@
-import { ParamsType } from "@common";
+import { ParamsType } from "../../common";
 export interface IParamsMapKey {
   // 目标类
   target: object | any;

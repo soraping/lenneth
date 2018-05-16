@@ -12,8 +12,8 @@
     "removeComments": true,
     "importHelpers": true,
     "declaration": true,
-    "rootDir": "./",
-    "outDir": "./build",
+    "rootDir": ".",
+    "outDir": "./lib",
     "baseUrl": ".",
     "paths": {
       "@core": ["src/core"],
@@ -22,12 +22,10 @@
       "@constants": ["src/constants"],
       "@common": ["src/common"],
       "@services": ["src/services"],
-      "@utils": ["src/utils"],
-      "@lenneth": ["./src"]
+      "@utils": ["src/utils"]
     },
     "lib": ["es6", "dom", "es7"]
   },
-  "exclude": ["node_modules", "build"],
-  "include": ["./typings", "./src/**/*.ts", "index.ts", "./examples/**/*.ts"],
-  "files": ["./index.ts"]
+  "exclude": ["node_modules", "lib"],
+  "include": ["./typings", "./src/**/*.ts"]
 }

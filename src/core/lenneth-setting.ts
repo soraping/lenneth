@@ -7,6 +7,7 @@ import { SERVER_SETTINGS } from "@constants";
 import { Value } from "@decorators";
 import { DebugController } from "./debug.controller";
 import { LennethGlobalError } from "./lenneth-error";
+import { LennethResponse } from "./lenneth-response";
 
 // 根目录
 const rootDir = process.cwd();
@@ -35,7 +36,12 @@ export class LennethSetting implements IServerSettings {
   /**
    * 错误处理
    */
-  @Value(LennethGlobalError) error: Function;
+  @Value(LennethGlobalError) globalError: Function;
+
+  /**
+   * 返回值处理
+   */
+  @Value(LennethResponse) response: Function;
   /**
    * 拦截器
    */
@@ -72,7 +78,8 @@ export class LennethSetting implements IServerSettings {
         rootDir: this.rootDir,
         port: this.port,
         env: this.env,
-        error: this.error,
+        globalError: this.globalError,
+        response: this.response,
         ...propertyKey
       };
       // imports 特殊处理

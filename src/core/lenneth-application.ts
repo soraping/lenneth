@@ -1,9 +1,13 @@
 import * as path from "path";
 import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
-import { ILennthApplication } from "@interfaces";
+import { ILennthApplication, IServerSettings } from "@interfaces";
 import { Metadata } from "@common";
-import { LENNETH_INTERCEPTOR_NAME, LENNETH_ERROR_NAME } from "@constants";
+import {
+  LENNETH_INTERCEPTOR_NAME,
+  LENNETH_ERROR_NAME,
+  LENNETH_MIDDLEWARE_NAME
+} from "@constants";
 import { getClass, toAsyncMiddleware, toErrorAsyncMiddleware } from "@utils";
 import { RouterService, ParamsService } from "@services";
 import { Autowired } from "@decorators";
@@ -98,17 +102,36 @@ export abstract class LennethApplication implements ILennthApplication {
    * 错误处理中间件
    */
   private async _errorMiddleware(): Promise<any> {
-    let errorMiddlewar = LennethSetting.serverSettingMap.get("error");
-    if (errorMiddlewar) {
-      let errorMiddlewarFun = new errorMiddlewar().use;
+    let serverSettingsMap: IServerSettings = LennethSetting.serverSettingMap;
+    let errorMiddleware = serverSettingsMap.get("globalError");
+    if (errorMiddleware) {
+      let errorMiddlewarFun = new errorMiddleware().use;
       let asyncMiddle = toErrorAsyncMiddleware(
         // 这里this指向的是类的原型
-        errorMiddlewar.prototype,
+        errorMiddleware.prototype,
         errorMiddlewarFun,
         errorMiddlewarFun[LENNETH_ERROR_NAME],
         this.paramsService.paramsToErrorList
       );
       this.app.on("error", asyncMiddle);
+    }
+  }
+
+  /**
+   * 返回值处理
+   */
+  private async _responseMiddleware(): Promise<any> {
+    let serverSettingsMap: IServerSettings = LennethSetting.serverSettingMap;
+    let responseMiddleware = serverSettingsMap.get("response");
+    if (responseMiddleware) {
+      let asyncMiddle = toAsyncMiddleware(
+        // 这里this指向的是类的原型
+        responseMiddleware.prototype,
+        new responseMiddleware().use,
+        responseMiddleware[LENNETH_MIDDLEWARE_NAME],
+        this.paramsService.paramsToList
+      );
+      this.app.use(asyncMiddle);
     }
   }
 
@@ -148,6 +171,7 @@ export abstract class LennethApplication implements ILennthApplication {
       await this._loadBodyParser();
       // 路由载入前
       await this._callHook("$onRoutesInit", undefined, this.app);
+      await this._responseMiddleware();
       // 载入路由
       await this._loadRouters();
       // 路由载入之后
@@ -160,7 +184,8 @@ export abstract class LennethApplication implements ILennthApplication {
       await this._callHook("$onReady");
     } catch (error) {
       this._callHook("$onServerInitError", undefined, error);
-      return Promise.reject(error);
+      Promise.reject(error);
+      throw error;
     }
   }
 }

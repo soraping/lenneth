@@ -1,25 +1,33 @@
-/**
- * 全局默认error处理
- */
 import { ErrorMiddlewar, Err, Response, Autowired } from "@decorators";
 import {
   IErrorMiddlewar,
   TResponse,
-  IErrorResponse,
-  IContext
+  IContext,
+  IErrorResponse
 } from "@interfaces";
 import { HttpStatus } from "@common";
 import { LoggerService } from "@services";
 
+/**
+ * 全局默认error 事件捕获 处理
+ */
 @ErrorMiddlewar()
 export class LennethGlobalError implements IErrorMiddlewar {
   @Autowired("lenneth-global-error") logger: LoggerService;
-  async use(@Err() error: any, @Response() response: TResponse, ctx: IContext) {
+  async use(@Err() error: any) {
     this.logger.error(error);
-    // ctx.body = {
-    //   status: error.status,
-    //   message: error.message,
-    //   data: error.data
-    // };
+  }
+}
+
+/**
+ * 自定义异常
+ */
+export class LennethError extends Error {
+  code: string;
+  constructor(err_opt: IErrorResponse) {
+    super();
+    this.name = err_opt.name;
+    this.code = err_opt.code;
+    this.message = err_opt.message;
   }
 }

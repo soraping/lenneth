@@ -1,0 +1,12 @@
+node_modules
+tsconfig.json
+yarn.lock
+src
+.vscode
+.gitignore
+typings
+examples
+test
+.idea
+.wsts.partial.yml
+*.log

@@ -1,6 +1,13 @@
-# resource-ignore-patterns:
-#  - dist
-#  - out
+ # 忽视的文件夹
+ resource-ignore-patterns:
+  - node_modules
+  - test
+  - lib
+  - .vscode
+  - .idea
+  - typings
+  - README.MD
+  - gulpfile.js
 
 #
 # only valid in the outputDirectory.

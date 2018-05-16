@@ -11,8 +11,10 @@ export interface IServerSettings extends IBaseInterface {
   imports?: TImports;
   // 拦截器
   interceptor?: Function;
-  // 错误处理error middlewara
-  error?: Function;
+  // 全局错误处理error middleware
+  globalError?: Function;
+  // 全局处理返回值 response middleware
+  response?: Function;
   // 环境变量
   env?: string;
   debug?: boolean;
