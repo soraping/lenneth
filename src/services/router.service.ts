@@ -123,7 +123,7 @@ export class RouterService {
         (imports[key] as any[]).forEach(item => {
           let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(item)}`;
           let controllerPath = path.join(
-            key,
+            this._startWithSep(key),
             Metadata.getOwn(metadataName, item)
           );
           Metadata.set(metadataName, controllerPath, item);
@@ -133,11 +133,21 @@ export class RouterService {
           imports[key]
         )}`;
         let controllerPath = path.join(
-          key,
+          this._startWithSep(key),
           Metadata.getOwn(metadataName, imports[key])
         );
         Metadata.set(metadataName, controllerPath, imports[key]);
       }
     });
+  }
+
+  /**
+   * 添加 /
+   */
+  _startWithSep(key: string) {
+    if (!key.startsWith("/")) {
+      key = `/${key}`;
+    }
+    return key;
   }
 }

@@ -13,19 +13,36 @@ const fs = require("fs");
 const destination = "./lib";
 // 类型文件夹的目录
 const interface_path = path.resolve(__dirname, "lib/interfaces");
+const common_path = path.resolve(__dirname, "lib/common");
+const services_path = path.resolve(__dirname, "lib/services");
+
 // 替换字符
-const replace_file = (file_path, target) => {
+const replace_file = file_path => {
   fs.readFile(file_path, (err, data) => {
     if (!err) {
-      if (data.indexOf("@interfaces") != -1) {
-        console.log(`替换 => ${file_path}`);
-        let newSource = data.toString().replace("@interfaces", target);
-        fs.writeFile(file_path, newSource, err => {
-          if (err) {
-            console.error(err);
-          }
-        });
-      }
+      let relative_interface_path = path.relative(
+        path.dirname(file_path),
+        interface_path
+      );
+      let relative_common_path = path.relative(
+        path.dirname(file_path),
+        common_path
+      );
+      let relative_services_path = path.relative(
+        path.dirname(file_path),
+        services_path
+      );
+
+      let newSource = data
+        .toString()
+        .replace("@interfaces", relative_interface_path);
+      newSource = newSource.replace("@common", relative_common_path);
+      newSource = newSource.replace("@services", relative_services_path);
+      fs.writeFile(file_path, newSource, err => {
+        if (err) {
+          console.error(err);
+        }
+      });
     } else {
       console.error(err);
     }
@@ -45,12 +62,8 @@ gulp.task("relative", () => {
     vinylPaths(file_path => {
       // 相对于类型目录的绝对路径值,本文件夹内不做处理
       if (file_path.indexOf("interfaces") == -1) {
-        let relative_path = path.relative(
-          path.dirname(file_path),
-          interface_path
-        );
         // 替换文件内部的字符
-        replace_file(file_path, relative_path);
+        replace_file(file_path);
       }
       return Promise.resolve();
     })

@@ -29,7 +29,7 @@ export const UseBefore = (...middClassList: Function[]): Function => {
         ParamsService.paramsMap.get(paramsMapKey)
       );
       // 删除原值
-      ParamsService.paramsMap.delete(paramsMapKey);
+      // ParamsService.paramsMap.delete(paramsMapKey);
       middlewareList.push(item.prototype["use"]);
     });
     target[name] = toArray(target[name]);

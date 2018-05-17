@@ -124,11 +124,12 @@ export abstract class LennethApplication implements ILennthApplication {
     let serverSettingsMap: IServerSettings = LennethSetting.serverSettingMap;
     let responseMiddleware = serverSettingsMap.get("response");
     if (responseMiddleware) {
+      let responseMiddlewareFun = new responseMiddleware().use;
       let asyncMiddle = toAsyncMiddleware(
         // 这里this指向的是类的原型
         responseMiddleware.prototype,
-        new responseMiddleware().use,
-        responseMiddleware[LENNETH_MIDDLEWARE_NAME],
+        responseMiddlewareFun,
+        responseMiddlewareFun[LENNETH_MIDDLEWARE_NAME],
         this.paramsService.paramsToList
       );
       this.app.use(asyncMiddle);

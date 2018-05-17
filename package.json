@@ -1,8 +1,8 @@
 {
   "name": "lenneth",
-  "version": "0.0.7",
+  "version": "0.0.14",
   "description": "A Node Web Framework on top of Koa",
-  "main": "build/index.js",
+  "main": "index.ts",
   "scripts": {
     "clean": "rm -rf lib",
     "clean-src": "rm -rf lib/src",
@@ -12,19 +12,17 @@
     "deploy": "npm publish ./lib"
   },
   "dependencies": {
-    "cli-color": "^1.2.0",
     "koa": "^2.5.0",
     "koa-bodyparser": "^4.2.0",
     "koa-router": "^7.4.0",
     "reflect-metadata": "^0.1.12",
     "ts-log-debug": "^4.0.3",
-    "tslib": "^1.9.0"
-  },
-  "devDependencies": {
-    "@types/cli-color": "^0.3.29",
+    "tslib": "^1.9.0",
     "@types/koa": "^2.0.44",
     "@types/koa-bodyparser": "^4.2.0",
-    "@types/koa-router": "^7.0.27",
+    "@types/koa-router": "^7.0.27"
+  },
+  "devDependencies": {
     "chai": "^4.1.2",
     "gulp": "^3.9.1",
     "gulp-add-src": "^1.0.0",
