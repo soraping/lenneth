@@ -8,3 +8,5 @@ temp
 build
 *.log
 lib
+test/**/*.js
+test/**/*.js.map

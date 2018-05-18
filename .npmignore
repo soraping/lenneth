@@ -10,3 +10,4 @@ test
 .idea
 .wsts.partial.yml
 *.log
+test
