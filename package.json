@@ -10,7 +10,8 @@
     "build":
       "yarn clean && yarn ws-publish && npx gulp copy && yarn clean-src && npx gulp relative",
     "deploy": "npm publish ./lib",
-    "build:test": "tsc --project ./test/tsconfig-test.json"
+    "build:test": "tsc --project ./test/tsconfig-test.json",
+    "test": "yarn build:test && npx mocha test"
   },
   "dependencies": {
     "@types/koa": "^2.0.44",
