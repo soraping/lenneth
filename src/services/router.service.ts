@@ -111,6 +111,9 @@ export class RouterService {
       }
     });
     this.loggerService.info("\n" + logstr.trim());
+    // 节约内存
+    RouterService.DescriptionMap.clear();
+    RouterService.DecoratedRouters.clear();
   }
 
   /**

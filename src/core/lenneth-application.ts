@@ -3,13 +3,9 @@ import * as Koa from "koa";
 import * as bodyParser from "koa-bodyparser";
 import { ILennthApplication, IServerSettings } from "@interfaces";
 import { Metadata } from "@common";
-import {
-  LENNETH_INTERCEPTOR_NAME,
-  LENNETH_ERROR_NAME,
-  LENNETH_MIDDLEWARE_NAME
-} from "@constants";
+import { LENNETH_ERROR_NAME, LENNETH_MIDDLEWARE_NAME } from "@constants";
 import { getClass, toAsyncMiddleware, toErrorAsyncMiddleware } from "@utils";
-import { RouterService, ParamsService } from "@services";
+import { RouterService, ParamsService, LoggerService } from "@services";
 import { Autowired } from "@decorators";
 import { LennethSetting } from "./lenneth-setting";
 
@@ -24,6 +20,7 @@ export abstract class LennethApplication implements ILennthApplication {
   @Autowired() private routerService: RouterService;
   // 参数设置
   @Autowired() private paramsService: ParamsService;
+  @Autowired() private logger: LoggerService;
 
   constructor() {
     // 获取设置的service参数
@@ -62,15 +59,7 @@ export abstract class LennethApplication implements ILennthApplication {
     // 读取拦截器类
     let Interceptor = LennethSetting.serverSettingMap.get("interceptor");
     if (Interceptor) {
-      let interceptorFun = new Interceptor().use;
-      let asyncMiddle = toAsyncMiddleware(
-        // 实例指向的是类的原型对象，所以此处不是类的本身，而是类的原型
-        Interceptor.prototype,
-        interceptorFun,
-        interceptorFun[LENNETH_INTERCEPTOR_NAME],
-        this.paramsService.paramsToList
-      );
-      this.app.use(asyncMiddle);
+      this._loadMiddleware(Interceptor);
     }
   }
 
@@ -124,12 +113,22 @@ export abstract class LennethApplication implements ILennthApplication {
     let serverSettingsMap: IServerSettings = LennethSetting.serverSettingMap;
     let responseMiddleware = serverSettingsMap.get("response");
     if (responseMiddleware) {
-      let responseMiddlewareFun = new responseMiddleware().use;
+      this._loadMiddleware(responseMiddleware);
+    }
+  }
+
+  /**
+   * 引入中间件
+   * @param middlewareClass
+   */
+  private _loadMiddleware(middlewareClass) {
+    if (middlewareClass) {
+      let middlewareFun = new middlewareClass().use;
       let asyncMiddle = toAsyncMiddleware(
         // 这里this指向的是类的原型
-        responseMiddleware.prototype,
-        responseMiddlewareFun,
-        responseMiddlewareFun[LENNETH_MIDDLEWARE_NAME],
+        middlewareClass.prototype,
+        middlewareFun,
+        middlewareFun[LENNETH_MIDDLEWARE_NAME],
         this.paramsService.paramsToList
       );
       this.app.use(asyncMiddle);
@@ -143,6 +142,7 @@ export abstract class LennethApplication implements ILennthApplication {
     let { hostname, port } = this.lennethSetting.getHttpPort();
     return new Promise((res, err) => {
       this.app.listen(<number>port, hostname);
+      this.logger.info(`app start ${port}`);
       res();
     });
   }
