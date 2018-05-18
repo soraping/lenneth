@@ -1,6 +1,6 @@
 {
   "name": "lenneth",
-  "version": "0.0.16",
+  "version": "0.1.1",
   "description": "A Node Web Framework on top of Koa",
   "main": "index.ts",
   "scripts": {
@@ -36,6 +36,7 @@
   "engines": {
     "node": ">=8.0.0"
   },
+  "keywords": ["koa2", "koa-router", "typescript", "decorator"],
   "repository": {
     "type": "git",
     "url": "https://github.com/soraping/lenneth.git"
