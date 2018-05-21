@@ -8,7 +8,11 @@ import { HttpStatus, ResponseStatus } from "@common";
 import { LennethError } from "./Lenneth-error";
 @Middleware()
 export class LennethResponse implements IMiddleware {
-  async use(@Response() response: TResponse, @Next() next: TNext) {
+  async use(
+    @Response() response: TResponse,
+    @Next() next: TNext,
+    ctx: IContext
+  ) {
     try {
       // 执行前面所有的中间件
       await next();
@@ -22,6 +26,7 @@ export class LennethResponse implements IMiddleware {
       }
       return (response.body = { code: 0, message: ResponseStatus.SUCCESS });
     } catch (err) {
+      ctx.status = err.code;
       response.status = HttpStatus.OK;
       if (err instanceof LennethError) {
         response.body = {
@@ -30,11 +35,12 @@ export class LennethResponse implements IMiddleware {
         };
       } else {
         response.body = {
+          code: err.code || HttpStatus.INTERNAL_SERVER_ERROR,
           message: err.message || ResponseStatus.ERROR
         };
+        // 未识别错误 抛至最外层error全局处理
+        throw err;
       }
-      // 抛至最外层error全局处理
-      throw err;
     }
   }
 }

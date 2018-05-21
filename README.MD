@@ -164,3 +164,9 @@ export class UserService {
   }
 }
 ```
+
+> 单元测试
+
+```bash
+yarn test
+```
