@@ -1,12 +1,6 @@
-### lenneth -- a simple and quick node web framework on top of Koa2
-
-> 案例
-
-[lenneth-demo](https://github.com/soraping/lenneth-demo)
-
 > 说明
 
-封装 lenneth 旨在快速方便的搭建出一个 node web 应用，不过度封装也不随波逐流，kao 的 node 是简单的，lenneth 也是。
+封装 lenneth 旨在快速方便的搭建出一个 node web 应用，不过度封装也不随波逐流，koa 的 node 是简单的，lenneth 也是。
 
 基于 ES6+typescript 的一些特性，做了一些类似 spring 的注解，对开发本身不增加复杂度，并且不失 koa 的灵活性。
 lenneth 内部已经集成了 koa, koa-bodyparser, koa-router 这 3 个基础库，已经满足了大部分的开发，如果需要引入其他的中间件，可以在入口文件中引入。
@@ -69,6 +63,71 @@ http://localhost:8081
 class App extends LennethApplication implements ILenneth {
   $onMountingMiddlewares() {
     this.use(logger());
+  }
+}
+```
+
+* interceptor
+
+其实也是一个中间件，只不过在最前执行
+
+```javascript
+import { IMiddleware, Middleware, HeaderParams, Next, TNext } from "lenneth";
+
+@Middleware()
+export class Interceptor implements IMiddleware {
+  async use(@HeaderParams() header: any, @Next() next: TNext) {
+    console.log("Interceptor", header);
+    await next();
+  }
+}
+```
+
+* response
+
+中间件，在最后执行，默认开启，可以覆盖
+
+```javascript
+import { IMiddleware, IContext, TResponse, TNext } from "@interfaces";
+import { Middleware, Response, Next } from "@decorators";
+import { HttpStatus, ResponseStatus } from "@common";
+import { LennethError } from "./Lenneth-error";
+@Middleware()
+export class LennethResponse implements IMiddleware {
+  async use(
+    @Response() response: TResponse,
+    @Next() next: TNext,
+    ctx: IContext
+  ) {
+    try {
+      // 执行前面所有的中间件
+      await next();
+      // 统一处理返回
+      if (response.body) {
+        return (response.body = {
+          code: 0,
+          message: ResponseStatus.SUCCESS,
+          data: response.body
+        });
+      }
+      return (response.body = { code: 0, message: ResponseStatus.SUCCESS });
+    } catch (err) {
+      ctx.status = err.code;
+      response.status = HttpStatus.OK;
+      if (err instanceof LennethError) {
+        response.body = {
+          code: err.code,
+          message: err.message || ResponseStatus.ERROR
+        };
+      } else {
+        response.body = {
+          code: err.code || HttpStatus.INTERNAL_SERVER_ERROR,
+          message: err.message || ResponseStatus.ERROR
+        };
+        // 未识别错误 抛至最外层error全局处理
+        throw err;
+      }
+    }
   }
 }
 ```
@@ -170,3 +229,15 @@ export class UserService {
 ```bash
 yarn test
 ```
+
+> 案例
+
+[lenneth-demo](https://github.com/soraping/lenneth-demo)
+
+> 项目地址
+
+[lenneth](https://github.com/soraping/lenneth)
+
+> 说在最后
+
+当初做项目的时候，在 github 上搜过一个项目，是基于 express 的--[ts-express-decorators](https://github.com/Romakita/ts-express-decorators)，里面有很多不错的设计，lenneth 里的服务启动生命周期就是照搬其中的。不过我不喜欢把 node 弄得那么大，那么全，而且，koa 本身就是一个极简的应用，所以，lenneth 仅仅只是做了一层封装，繁简自然。
