@@ -17,7 +17,7 @@ export type TPromise = () => Promise<any>;
 
 export interface IErrorResponse {
   message?: string;
-  code?: string;
+  code?: string | number;
   name?: string;
 }
 

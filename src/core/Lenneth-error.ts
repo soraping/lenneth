@@ -23,7 +23,7 @@ export class LennethGlobalError implements IErrorMiddlewar {
  * 自定义异常
  */
 export class LennethError extends Error {
-  code: string;
+  code: string | number;
   constructor(err_opt: IErrorResponse) {
     super();
     this.name = err_opt.name;

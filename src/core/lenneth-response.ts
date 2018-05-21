@@ -22,15 +22,19 @@ export class LennethResponse implements IMiddleware {
       }
       return (response.body = { code: 0, message: ResponseStatus.SUCCESS });
     } catch (err) {
+      response.status = HttpStatus.OK;
       if (err instanceof LennethError) {
-        response.status = HttpStatus.OK;
         response.body = {
           code: err.code,
           message: err.message || ResponseStatus.ERROR
         };
-        // 抛至最外层error全局处理
-        throw err;
+      } else {
+        response.body = {
+          message: err.message || ResponseStatus.ERROR
+        };
       }
+      // 抛至最外层error全局处理
+      throw err;
     }
   }
 }
