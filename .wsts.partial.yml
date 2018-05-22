@@ -8,6 +8,9 @@
   - typings
   - README.MD
   - gulpfile.js
+  - build
+  - example
+  - dev
 
 #
 # only valid in the outputDirectory.

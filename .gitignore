@@ -10,3 +10,5 @@ build
 lib
 test/**/*.js
 test/**/*.js.map
+example
+dev

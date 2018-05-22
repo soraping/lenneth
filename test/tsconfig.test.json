@@ -16,5 +16,5 @@
     "outDir": ".",
     "lib": ["es6", "dom", "es7"]
   },
-  "exclude": ["node_modules", "lib"]
+  "exclude": ["node_modules", "lib", "example", "src"]
 }
