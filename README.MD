@@ -40,6 +40,56 @@ open in browser
 http://localhost:8081
 ```
 
+> lenneth 核心
+
+koa 最精髓的就是它的洋葱模型，而洋葱模型的元素就是一个一个的中间件，lenneth 的封装就是将普通的类方法转化成 koa 的中间件
+
+```javascript
+  /**
+   * koa中间件，有两个参数
+   * @params ctx 上下文
+   * @params next 洋葱模型执行下一个中间件
+   */
+  async (ctx, next) => {
+
+  }
+
+  /**
+   * 这个类方法并不是koa的中间件
+   * 按照设计思路，类方法的两个参数一个是获取path参数，一个是获取返回对象，和koa的中间件参数不同
+   */
+  @Get("/detail/:id")
+  @UseBefore(UserRuleAuth)
+  async getUserDetail(
+    @PathVariable("id") id: string,
+    @Response() response: TResponse
+  ) {
+    response.body = this.userService.getUserById(id);
+  }
+```
+
+转换函数
+
+这个方法就是将上述的类方法转成 koa 的中间件。在类方法的上层封装了一个 koa 的中间件方法，在这个方法内部自动执行类方法，并将这个方法的 this 指向原来的类。
+
+```javascript
+// lenneth封装koa2的核心
+const toAsyncMiddleware = (
+  target: Object | any,
+  middleware: TApiMiddleware,
+  key?: string,
+  cb?: (key: string, ctx: IContext, next: TNext) => any[]
+) => {
+  return async (ctx: IContext, next: TNext) => {
+    if (key) {
+      // 此处一定要用call来重新设置this指向
+      return middleware.call(target, ...cb(key, ctx, next), ctx, next);
+    }
+    return middleware.call(target, ctx, next);
+  };
+};
+```
+
 > 各个模块
 
 * application
