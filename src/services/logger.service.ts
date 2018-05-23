@@ -9,7 +9,12 @@ import {
   Appender,
   BaseAppender
 } from "ts-log-debug";
-import { ILoggerService, ILogTableSettings } from "@interfaces";
+import { LennethSetting } from "@core";
+import {
+  ILoggerService,
+  ILogTableSettings,
+  ILogFileSetting
+} from "@interfaces";
 import { BaseService } from "./base.service";
 
 const consoleLog = console.log.bind(console);
@@ -70,20 +75,28 @@ export class LoggerService implements ILoggerService {
 
   private use(): Logger {
     const logger = new Logger(this._loggerName);
-    logger.appenders
-      .set("std-log", {
-        type: "LennethConsoleAppender",
-        level: ["debug", "info", "trace"]
-      })
-      .set("file-log", {
+
+    const serverSettingMap = LennethSetting.serverSettingMap;
+    let logFileSetting: ILogFileSetting = serverSettingMap.get(
+      "logFileSetting"
+    );
+
+    logger.appenders.set("std-log", {
+      type: "LennethConsoleAppender",
+      level: ["debug", "info"]
+    });
+    if (logFileSetting && logFileSetting.useFlag) {
+      logger.appenders.set("file-log", {
         type: "file",
-        filename: "lenneth-error.log",
-        maxLogSize: 10485760,
-        backups: 3,
+        filename: logFileSetting.filename || "error.log",
+        maxLogSize: logFileSetting.maxLogSize || 10485760,
+        backups: logFileSetting.backups || 3,
         compress: true,
-        levels: ["fatal", "error", "warn"],
+        levels: logFileSetting.levels || ["error", "warn"],
         layout: { type: "customJson" }
       });
+    }
+
     return logger;
   }
 }

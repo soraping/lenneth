@@ -1,7 +1,7 @@
 /**
  * 基础设置类
  */
-import { IServerSettings, TImports } from "@interfaces";
+import { IServerSettings, TImports, ILogFileSetting } from "@interfaces";
 import { Env, Metadata } from "@common";
 import { SERVER_SETTINGS } from "@constants";
 import { Value } from "@decorators";
@@ -47,6 +47,11 @@ export class LennethSetting implements IServerSettings {
    */
   interceptor: Function;
 
+  // /**
+  //  * 日志文件设置
+  //  */
+  logFileSetting: ILogFileSetting;
+
   /**
    * {
    *    imports,
@@ -80,6 +85,7 @@ export class LennethSetting implements IServerSettings {
         env: this.env,
         globalError: this.globalError,
         response: this.response,
+        logFileSetting: this.logFileSetting,
         ...propertyKey
       };
       // imports 特殊处理

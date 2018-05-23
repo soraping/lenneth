@@ -1,4 +1,5 @@
 import { IBaseInterface } from "./IBase.interface";
+import { ILogFileSetting } from "./ILogFileSetting";
 
 export type TImports = { [path: string]: Function[] | Function };
 
@@ -17,6 +18,7 @@ export interface IServerSettings extends IBaseInterface {
   response?: Function;
   // 环境变量
   env?: string;
-  debug?: boolean;
+  // log file 设置
+  logFileSetting?: ILogFileSetting;
   [key: string]: any;
 }

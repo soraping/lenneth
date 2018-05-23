@@ -8,3 +8,4 @@ export * from "./IMiddleware";
 export * from "./ILoggerService";
 export * from "./IInterceptor";
 export * from "./IErrorMiddlewar";
+export * from "./ILogFileSetting";
