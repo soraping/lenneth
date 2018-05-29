@@ -15,6 +15,16 @@ yarn add lenneth
 npm install lenneth
 ```
 
+也可以客户端安装
+
+```bash
+# lic 全局安装
+npm install -g lenneth-cli
+
+# 初始化工程目录
+lenneth init yourApp
+```
+
 > 瞄一眼
 
 ```javascript
@@ -287,6 +297,10 @@ yarn test
 > 项目地址
 
 [lenneth](https://github.com/soraping/lenneth)
+
+> 脚手架工具
+
+[lenneth-cli](https://github.com/soraping/lenneth-cli)
 
 > 说在最后
 
