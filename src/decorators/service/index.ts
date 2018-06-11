@@ -20,7 +20,7 @@ export const Value = (value: string | any = "") => {
       configurable: true
     };
     descriptor.value = value;
-    Object.defineProperty(
+    Reflect.defineProperty(
       (target && target.prototype) || target,
       propertyKey,
       descriptor
@@ -42,7 +42,7 @@ export const Autowired = (params: any = ""): Function => {
     };
     // 实例化修饰类
     descriptor.value = params ? new typeClass(params) : new typeClass();
-    Object.defineProperty(
+    Reflect.defineProperty(
       (target && target.prototype) || target,
       propertyKey,
       descriptor

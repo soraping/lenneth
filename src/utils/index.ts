@@ -46,7 +46,7 @@ export const descriptorOf = (
   target: any,
   propertyKey: string
 ): PropertyDescriptor | undefined => {
-  return Object.getOwnPropertyDescriptor(
+  return Reflect.getOwnPropertyDescriptor(
     (target && target.prototype) || target,
     propertyKey
   );

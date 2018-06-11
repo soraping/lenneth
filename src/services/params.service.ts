@@ -18,10 +18,7 @@ export class ParamsService extends BaseService {
    * @param target
    * @param propertyKey
    */
-  static fomartParamsMapKey(
-    target: object | any,
-    propertyKey: string | symbol
-  ) {
+  static fomartParamsMapKey(target: object | any, propertyKey: string) {
     return `${getClassName(target)}_${propertyKey}`;
   }
 

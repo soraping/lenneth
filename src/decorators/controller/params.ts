@@ -7,7 +7,7 @@ import { toArray, getClassName } from "@utils";
 
 const decorate = (
   target: Object,
-  propertyKey: string | symbol,
+  propertyKey: string,
   parameterIndex: number,
   paramsKey: string,
   type: ParamsType
@@ -26,11 +26,7 @@ const decorate = (
 };
 
 export const RequestParam = (paramsKey: string | any): ParameterDecorator => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ): any => {
+  return (target: Object, propertyKey: string, parameterIndex: number): any => {
     decorate(
       target,
       propertyKey,
@@ -42,11 +38,7 @@ export const RequestParam = (paramsKey: string | any): ParameterDecorator => {
 };
 
 export const RequestBody = (paramsKey?: string | any) => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ): any => {
+  return (target: Object, propertyKey: string, parameterIndex: number): any => {
     decorate(
       target,
       propertyKey,
@@ -58,11 +50,7 @@ export const RequestBody = (paramsKey?: string | any) => {
 };
 
 export const PathVariable = (paramsKey: string | any) => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ): any => {
+  return (target: Object, propertyKey: string, parameterIndex: number): any => {
     decorate(
       target,
       propertyKey,
@@ -74,31 +62,19 @@ export const PathVariable = (paramsKey: string | any) => {
 };
 
 export const Response = () => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ) => {
+  return (target: Object, propertyKey: string, parameterIndex: number) => {
     decorate(target, propertyKey, parameterIndex, "", ParamsType.RESPONSE);
   };
 };
 
 export const Request = () => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ) => {
+  return (target: Object, propertyKey: string, parameterIndex: number) => {
     decorate(target, propertyKey, parameterIndex, "", ParamsType.REQUEST);
   };
 };
 
 export const HeaderParams = (paramsKey: string | any = "") => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ) => {
+  return (target: Object, propertyKey: string, parameterIndex: number) => {
     decorate(
       target,
       propertyKey,
@@ -110,11 +86,7 @@ export const HeaderParams = (paramsKey: string | any = "") => {
 };
 
 export const Next = () => {
-  return (
-    target: Object,
-    propertyKey: string | symbol,
-    parameterIndex: number
-  ) => {
+  return (target: Object, propertyKey: string, parameterIndex: number) => {
     decorate(target, propertyKey, parameterIndex, "", ParamsType.NEXT);
   };
 };
@@ -122,7 +94,7 @@ export const Next = () => {
 export const Err = () => {
   return (
     target: object | any,
-    propertyKey: string | symbol,
+    propertyKey: string,
     parameterIndex: number
   ) => {
     decorate(target, propertyKey, parameterIndex, "", ParamsType.ERROR);
