@@ -1,13 +1,13 @@
 {
   "name": "lenneth",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Node Web Framework on top of Koa",
   "main": "index.ts",
   "scripts": {
     "clean": "rm -rf lib",
     "clean-src": "rm -rf lib/src",
-    "ws-publish": "npx ts-paths build ./ -d",
-    "build:prod": "yarn clean && yarn ws-publish && npx gulp copy && yarn clean-src",
+    "src-build": "npx ts-paths build ./ -d",
+    "build:prod": "yarn clean && yarn src-build && npx gulp copy && yarn clean-src",
     "deploy": "npm publish lib",
     "build:test": "tsc --project ./test/tsconfig.test.json",
     "test": "yarn build:test && npx mocha test"
