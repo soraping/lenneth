@@ -6,9 +6,8 @@
   "scripts": {
     "clean": "rm -rf lib",
     "clean-src": "rm -rf lib/src",
-    "ws-publish": "npx ws-ts build .",
-    "build:prod":
-      "yarn clean && yarn ws-publish && npx gulp copy && yarn clean-src && npx gulp relative",
+    "ws-publish": "npx ts-paths build ./ -d",
+    "build:prod": "yarn clean && yarn ws-publish && npx gulp copy && yarn clean-src",
     "deploy": "npm publish lib",
     "build:test": "tsc --project ./test/tsconfig.test.json",
     "test": "yarn build:test && npx mocha test"
@@ -39,14 +38,18 @@
     "sinon": "^4.4.5",
     "sinon-chai": "^3.0.0",
     "supertest": "^3.1.0",
-    "typescript": "^2.8.1",
-    "vinyl-paths": "^2.1.0",
-    "ws-ts": "^1.1.4"
+    "ts-paths": "^0.1.1",
+    "typescript": "^2.8.1"
   },
   "engines": {
     "node": ">=8.0.0"
   },
-  "keywords": ["koa2", "koa-router", "typescript", "decorator"],
+  "keywords": [
+    "koa2",
+    "koa-router",
+    "typescript",
+    "decorator"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/soraping/lenneth.git"

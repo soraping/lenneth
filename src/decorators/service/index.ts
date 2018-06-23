@@ -1,6 +1,5 @@
 import { Metadata } from "@common";
-import { descriptorOf } from "@utils";
-import { getClassName } from "@utils";
+import { descriptorOf, getClassName } from "@utils";
 import { LENNETH_SERVICE_PATH } from "@constants";
 
 export const Service = () => {
