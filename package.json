@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf lib",
     "clean-src": "rm -rf lib/src",
-    "src-build": "npx ts-paths build ./ -d",
+    "src-build": "npx ts-paths build ./ -d -l 2",
     "build:prod": "yarn clean && yarn src-build && npx gulp copy && yarn clean-src",
     "deploy": "npm publish lib",
     "build:test": "tsc --project ./test/tsconfig.test.json",
@@ -38,7 +38,7 @@
     "sinon": "^4.4.5",
     "sinon-chai": "^3.0.0",
     "supertest": "^3.1.0",
-    "ts-paths": "^0.1.1",
+    "ts-paths": "0.1.3",
     "typescript": "^2.8.1"
   },
   "engines": {
