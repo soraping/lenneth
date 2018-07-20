@@ -1,5 +1,5 @@
-import { PathParamsType } from "./PathParamsType";
+import { PathOrParamsType } from "./PathParamsType";
 export interface IRouterParams {
   method: string;
-  path: PathParamsType;
+  path: PathOrParamsType;
 }

@@ -10,7 +10,7 @@
  *    }
  * }
  */
-import { IRouterParams, PathParamsType } from "@interfaces";
+import { IRouterParams, PathOrParamsType } from "@interfaces";
 import { RouterService } from "@services";
 export const Router = (params: IRouterParams): Function => {
   return (target: any, name: string, descriptor: ParameterDecorator) => {
@@ -25,27 +25,18 @@ export const Router = (params: IRouterParams): Function => {
   };
 };
 
-export const Get = (path: PathParamsType): Function => {
-  return Router({
-    method: "GET",
-    path
-  });
+export const Get = (path: string): Function => {
+  return Router({ method: "GET", path });
 };
 
-export const Post = (path: PathParamsType): Function => {
-  return Router({
-    method: "POST",
-    path
-  });
+export const Post = (path: string): Function => {
+  return Router({ method: "POST", path });
 };
 
-export const Put = (path: PathParamsType): Function => {
-  return Router({
-    method: "PUT",
-    path
-  });
+export const Put = (path: string): Function => {
+  return Router({ method: "PUT", path });
 };
 
-export const Delete = (path: PathParamsType): Function => {
+export const Delete = (path: string): Function => {
   return Router({ method: "DELETE", path });
 };
