@@ -1,3 +1,5 @@
+### lenneth(蕾娜斯)
+
 > 说明
 
 封装 lenneth 旨在快速方便的搭建出一个 node web 应用，不过度封装也不随波逐流，koa 的 node 是简单的，lenneth 也是。
@@ -102,7 +104,7 @@ const toAsyncMiddleware = (
 
 > 各个模块
 
-* application
+- application
 
 入口文件处，使用 ServerSettings 修饰，里面的参数都是一些全局方法，如 interceptor，response 等，这些都是一个 middleware，lenneth 只是依照 koa 的洋葱模型调整了他们的执行顺利
 
@@ -127,7 +129,7 @@ class App extends LennethApplication implements ILenneth {
 }
 ```
 
-* interceptor
+- interceptor
 
 其实也是一个中间件，只不过在最前执行
 
@@ -143,7 +145,7 @@ export class Interceptor implements IMiddleware {
 }
 ```
 
-* response
+- response
 
 中间件，在最后执行，默认开启，可以覆盖
 
@@ -192,7 +194,7 @@ export class LennethResponse implements IMiddleware {
 }
 ```
 
-* controller
+- controller
 
 controller 主要是设置 router 和注入 services
 
@@ -217,7 +219,8 @@ import { UserAuth, RuleAuth } from "../middleware";
 
 @Controller("/user")
 export class UserController {
-  @Autowired() userService: UserService;
+  @Autowired()
+  userService: UserService;
 
   @Post("/add")
   @Description("添加会员")
@@ -241,7 +244,7 @@ export class UserController {
 }
 ```
 
-* middleware
+- middleware
 
 middleware 本质上其实就是 koa 的中间件，只不过我在此基础上又抽象出一层方法来引入获取 params 的方法，用来方便开发
 
@@ -265,7 +268,7 @@ export class RuleAuth implements IMiddleware {
 }
 ```
 
-* service
+- service
 
 这个模块只是做一个类输出方法
 
