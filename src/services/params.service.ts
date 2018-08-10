@@ -45,7 +45,7 @@ export class ParamsService extends BaseService {
             : ctx.request.body;
         case ParamsType.REQUEST:
           // request
-          return ctx.request;
+          return ctx.req;
         case ParamsType.RESPONSE:
           // response
           return ctx.response;
