@@ -23,12 +23,15 @@ type TRouterMiddleware = Router.IMiddleware;
 
 export class RouterService {
   // 注入路由
-  @Autowired() private router: Router;
+  @Autowired()
+  private router: Router;
 
   // 类方法参数服务
-  @Autowired() private paramsService: ParamsService;
+  @Autowired()
+  private paramsService: ParamsService;
 
-  @Autowired() private loggerService: LoggerService;
+  @Autowired()
+  private loggerService: LoggerService;
 
   constructor() {}
   /**
@@ -83,6 +86,13 @@ export class RouterService {
         ),
         <string>config.path
       );
+
+      // 判断追加中间件
+      let multerKey = `${getClassName(config.target)}_${config.name}_Multer`;
+      if (config.target[multerKey]) {
+        controllers.unshift(config.target[multerKey]);
+      }
+
       this.router[config.method.toLocaleLowerCase()](
         routerPath,
         ...(<TRouterMiddleware[]>controllers)

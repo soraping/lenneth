@@ -7,7 +7,8 @@ import {
   Response,
   TResponse,
   RequestBody,
-  PathVariable
+  PathVariable,
+  Multer
 } from "../../lib";
 import { UserService } from "./user.service";
 import { UserRuleAuth, UserAddAuth } from "./middleware";
@@ -15,9 +16,11 @@ import { IUserInfo } from "./interface";
 
 @Controller("/user")
 export class UserController {
-  @Autowired() userService: UserService;
+  @Autowired()
+  userService: UserService;
 
   @Get("/list")
+  @Multer()
   @UseBefore(UserRuleAuth)
   async getUserList(@Response() response: TResponse) {
     response.body = this.userService.getUserList();
