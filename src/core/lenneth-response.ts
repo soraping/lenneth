@@ -16,8 +16,9 @@ export class LennethResponse implements IMiddleware {
     try {
       // 执行前面所有的中间件
       await next();
+      let body = response.body || ctx.body;
       // 统一处理返回
-      if (response.body) {
+      if (body) {
         return (response.body = {
           code: 0,
           message: ResponseStatus.SUCCESS,
