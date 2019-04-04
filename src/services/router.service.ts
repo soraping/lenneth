@@ -79,13 +79,21 @@ export class RouterService {
         );
       });
 
-      let routerPath = path.join(
-        Metadata.getOwn(
-          `${LENNETH_CONTROLLER_PATH}_${getClassName(config.target)}`,
-          config.target
-        ),
-        <string>config.path
-      );
+      // windows 兼容
+      if (config.path == "/") {
+        config.path = "";
+      }
+      let routerPath = `${Metadata.getOwn(
+        `${LENNETH_CONTROLLER_PATH}_${getClassName(config.target)}`,
+        config.target
+      )}${config.path}`;
+      // let routerPath = path.join(
+      //   Metadata.getOwn(
+      //     `${LENNETH_CONTROLLER_PATH}_${getClassName(config.target)}`,
+      //     config.target
+      //   ),
+      //   <string>config.path
+      // );
 
       // 判断追加中间件
       let multerKey = `${getClassName(config.target)}_${config.name}_Multer`;
@@ -135,20 +143,27 @@ export class RouterService {
       if (isArray(imports[key])) {
         (imports[key] as any[]).forEach(item => {
           let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(item)}`;
-          let controllerPath = path.join(
-            this._startWithSep(key),
-            Metadata.getOwn(metadataName, item)
-          );
+          // let controllerPath = path.join(
+          //   this._startWithSep(key),
+          //   Metadata.getOwn(metadataName, item)
+          // );
+          let controllerPath = `${this._startWithSep(key)}${Metadata.getOwn(
+            metadataName,
+            item
+          )}`;
+
           Metadata.set(metadataName, controllerPath, item);
         });
       } else {
         let metadataName = `${LENNETH_CONTROLLER_PATH}_${getClassName(
           imports[key]
         )}`;
-        let controllerPath = path.join(
-          this._startWithSep(key),
-          Metadata.getOwn(metadataName, imports[key])
-        );
+        let importsPath = Metadata.getOwn(metadataName, imports[key]);
+        if (importsPath == "/") {
+          importsPath = "";
+        }
+        // 对window兼容，就不能用path.join
+        let controllerPath = `${this._startWithSep(key)}${importsPath}`;
         Metadata.set(metadataName, controllerPath, imports[key]);
       }
     });

@@ -1,6 +1,6 @@
 {
   "name": "lenneth",
-  "version": "0.2.6",
+  "version": "0.2.9",
   "description": "A Node Web Framework on top of Koa",
   "main": "index.ts",
   "scripts": {
